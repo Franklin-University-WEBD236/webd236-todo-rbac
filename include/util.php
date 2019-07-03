@@ -31,14 +31,6 @@ function isLoggedIn() {
   return isset($_SESSION['user']);
 }
 
-function ensureLoggedIn() {
-  if (!isLoggedIn()) {
-    $_SESSION['redirect'] = $_SERVER['REQUEST_URI'];
-    redirectRelative("user/login");
-    exit();
-  }
-}
-
 function debug($something) {
   echo "<div class='debug'>\n";
   print_r($something);

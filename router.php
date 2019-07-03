@@ -13,7 +13,8 @@ function routeUrl() {
   # continued...
 
   $entity = array_values($requestURI);
-  $controller = 'controllers/' . $entity[0] . '.php';
+  $className = ucfirst($entity[0]) . 'Controller';
+  $controller = 'controllers/' . $className . '.php';
   $func = strtolower($method) . '_' . (isset($entity[1]) ? $entity[1] : 'index');
   $params = array_slice($entity, 2);
 
@@ -24,11 +25,13 @@ function routeUrl() {
   }
 
   require $controller;
-  if (!function_exists($func)) {
-    die("Function '$func' doesn't exist in controller '$controller'.");
+  $object = new $className();
+  
+  if (!method_exists($object, $func)) {
+    die("Method '$func' doesn't exist in controller '$className'.");
   }
 
-  call_user_func_array($func, $params);
+  call_user_func_array(array($object, $func), $params);
   exit();
 }
 
