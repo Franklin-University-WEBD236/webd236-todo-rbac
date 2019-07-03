@@ -1,6 +1,13 @@
 <?php
 include_once 'models/db.php';
 
+class TodoModel extends Model {
+  
+  public function __construct() {
+    parent::__construct();
+  }
+  
+
 function findUserById($id) {
   global $db;
   $st = $db -> prepare('SELECT * FROM user WHERE id = ?');

@@ -1,12 +1,15 @@
 <?php
 include_once "controllers/Controller.php";
+include_once "models/TodoModel.php";
 include_once "include/util.php";
-include_once "models/todo.php";
 
 class TodoController extends Controller {
+
+  protected $model;
   
   public function __construct() {
     parent::__construct();
+    $this->model = new TodoModel();
   }
   
   function get_view($id) {

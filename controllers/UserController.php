@@ -54,7 +54,7 @@ class UserController extends Controller {
       array(
         'title' => 'Create an account',
         'form' => array(),
-        'action' => url('user/register'),
+        'action' => $this->view->url('user/register'),
       )
     );
   }
