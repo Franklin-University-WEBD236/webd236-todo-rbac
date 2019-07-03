@@ -40,8 +40,8 @@ class TodoController extends Controller {
     $todos = null;
     $dones = null;
     if (isLoggedIn()) {
-      $todos = findAllCurrentToDos($_SESSION['user']['id']);
-      $dones = findAllDoneToDos($_SESSION['user']['id']);
+      $todos = $this->model->findAllCurrentToDos($_SESSION['user']['id']);
+      $dones = $this->model->findAllDoneToDos($_SESSION['user']['id']);
     }
     $this->view->renderTemplate(
       "views/index.php",

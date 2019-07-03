@@ -38,17 +38,17 @@ class UserController extends Controller {
         )
       );
     } else {
-      $destination = $_SESSION['redirect'] ? $_SESSION['redirect'] : "/index";
+      $destination = isset($_SESSION['redirect']) ? $_SESSION['redirect'] : "";
       restartSession();
       $_SESSION['user'] = $user;
-      flash("Login successful!");
+      $this->view->flash("Login successful!");
       $this->view->redirect($destination);
     }
   }
 
   public function get_logout() {
     restartSession();
-    $this->view->redirectRelative('index');
+    $this->view->redirectRelative('');
   }
 
   public function get_register() {
@@ -117,19 +117,19 @@ class UserController extends Controller {
       $user = $this->model->findUserById($id);
       $_SESSION['user'] = $user;
       $this->view->flash("Welcome to To Do List, {$user['firstName']}.");
-      $this->view->redirectRelative("index");
+      $this->view->redirectRelative("");
     }
   }
 
   public function get_edit() {
-    $this->view->$this->view->ensureLoggedIn();
+    $this->ensureLoggedIn();
     $user = $_SESSION['user'];
 
     $this->view->renderTemplate(
       "views/user_register.php",
       array(
         'title' => 'Edit your profile',
-        'action' => url("user/edit/${user['id']}"),
+        'action' => $this->view->url("user/edit/${user['id']}"),
         'form' => array(
           'firstName' => $user['firstName'],
           'lastName'  => $user['lastName'],
@@ -143,7 +143,7 @@ class UserController extends Controller {
   }
 
   public function post_edit($id) {
-    $this->view->ensureLoggedIn();
+    $this->ensureLoggedIn();
     $user=$_SESSION['user'];
     if ($id != $user['id']) {
       die("Can't edit somebody else.");
@@ -164,7 +164,7 @@ class UserController extends Controller {
       $this->model->updateUser($user['id'], $form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
       $_SESSION['user'] = findUserById($user['id']);
       $this->view->flash("Profile updated");
-      $this->view->redirectRelative("index");
+      $this->view->redirectRelative("");
     }
   }
 }
