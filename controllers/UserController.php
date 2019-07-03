@@ -1,12 +1,15 @@
 <?php
 include_once "controllers/Controller.php";
+include_once "models/UserModel.php";
 include_once "include/util.php";
-include_once "models/user.php";
 
 class UserController extends Controller {
 
+  protected $model;
+  
   public function __construct() {
     parent::__construct();
+    $this->model = new UserModel;
   }
 
   public function get_login() {
@@ -23,7 +26,7 @@ class UserController extends Controller {
     $email = safeParam($form, 'email');
     $password = safeParam($form, 'password');
 
-    $user = findByEmailAndPassword($email, $password);
+    $user = $this->model->findByEmailAndPassword($email, $password);
     if (!$user) {
       $errors = array("Bad username/password combination");
       $this->view->renderTemplate(
@@ -109,11 +112,11 @@ class UserController extends Controller {
         )
       );
     } else {
-      $id = addUser($form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
+      $id = $this->model->addUser($form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
       restartSession();
-      $user = findUserById($id);
+      $user = $this->model->findUserById($id);
       $_SESSION['user'] = $user;
-      flash("Welcome to To Do List, {$user['firstName']}.");
+      $this->view->flash("Welcome to To Do List, {$user['firstName']}.");
       $this->view->redirectRelative("index");
     }
   }
@@ -158,9 +161,9 @@ class UserController extends Controller {
         )
       );
     } else {
-      updateUser($user['id'], $form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
+      $this->model->updateUser($user['id'], $form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
       $_SESSION['user'] = findUserById($user['id']);
-      flash("Profile updated");
+      $this->view->flash("Profile updated");
       $this->view->redirectRelative("index");
     }
   }
