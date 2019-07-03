@@ -39,12 +39,12 @@ class View {
       die("Template $fileName doesn't exist.");
     }
     $contents = file_get_contents($fileName);
-    $contents = preg_replace_callback('/%%\s*(.*)\s*%%/', '__importTemplate', $contents);
+    $contents = preg_replace_callback('/%%\s*(.*)\s*%%/', array($this, '__importTemplate'), $contents);
     return $contents;
   }
 
   private function __resolveRelativeUrls($matches) {
-    return url($matches[1]);
+    return $this->url($matches[1]);
   }
 
   private function __cacheName($view) {
@@ -62,14 +62,14 @@ class View {
     }
     # do we have a cached version?
     clearstatcache();
-    $cacheName = __cacheName($view);
+    $cacheName = $this->__cacheName($view);
     if ($useCache && file_exists($cacheName) && (filemtime($cacheName) >= filemtime($view))) {
       $contents = file_get_contents($cacheName);
     } else {
       # we need to build the file (doesn't exist or template is newer)
-      $contents = __importTemplate(array('unused', $view));
+      $contents = $this->__importTemplate(array('unused', $view));
 
-      $contents = preg_replace_callback('/@@\s*(.*)\s*@@/U', '__resolveRelativeUrls', $contents);
+      $contents = preg_replace_callback('/@@\s*(.*)\s*@@/U', array($this, '__resolveRelativeUrls'), $contents);
 
       $patterns = array(
         array('src' => '/{{/', 'dst' => '<?php echo('),
