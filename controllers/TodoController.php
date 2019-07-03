@@ -5,8 +5,12 @@ include_once "models/todo.php";
 
 class TodoController extends Controller {
   
+  public function __construct() {
+    parent::__construct();
+  }
+  
   function get_view($id) {
-    ensureLoggedIn();
+    $this->ensureLoggedIn();
     if (!$id) {
       die("No todo id specified");
     }
@@ -47,7 +51,7 @@ class TodoController extends Controller {
   }
 
   function get_edit($id) {
-    ensureLoggedIn();
+    $this->ensureLoggedIn();
     if (!$id) {
       die("No todo specified");
     }
@@ -70,7 +74,7 @@ class TodoController extends Controller {
   }
 
   function post_done($id) {
-    ensureLoggedIn();
+    $this->ensureLoggedIn();
     if (!$id) {
       die("No todo specified");
     }
@@ -88,7 +92,7 @@ class TodoController extends Controller {
   }
 
   function post_add() {
-    ensureLoggedIn();
+    $this->ensureLoggedIn();
     $description = safeParam($_POST, 'description', '');
     if (!$description) {
       die("no description given");
@@ -109,7 +113,7 @@ class TodoController extends Controller {
   }
 
   function post_edit($id) {
-    ensureLoggedIn();
+    $this->ensureLoggedIn();
     if (!$id) {
       die("No todo specified");
     }
@@ -133,7 +137,7 @@ class TodoController extends Controller {
   }
 
   function post_delete($id) {
-    ensureLoggedIn();
+    $this->ensureLoggedIn();
     if (!$id) {
       die("No todo specified");
     }

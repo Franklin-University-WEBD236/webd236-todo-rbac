@@ -15,7 +15,7 @@ class View {
   }
 
   public function redirectRelative($url) {
-    redirect(url($url));
+    $this->redirect($this->url($url));
   }
 
   public function url($url) {

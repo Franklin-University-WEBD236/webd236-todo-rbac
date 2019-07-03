@@ -8,13 +8,13 @@ class Controller {
     $this->view = new View();
   }
   
-  function ensureLoggedIn() {
-  if (!isLoggedIn()) {
-    $_SESSION['redirect'] = $_SERVER['REQUEST_URI'];
-    redirectRelative("user/login");
-    exit();
+  public function ensureLoggedIn() {
+    if (!isLoggedIn()) {
+      $_SESSION['redirect'] = $_SERVER['REQUEST_URI'];
+      $this->view->redirectRelative("user/login");
+      exit();
+    }
   }
-}
 
 
 }
