@@ -20,7 +20,7 @@ class TodoController extends Controller {
       die("Not todo owner");
     }
 
-    renderTemplate(
+    $this->view->renderTemplate(
       "views/todo_view.php",
       array(
         'title' => 'Viewing To Do',
@@ -60,7 +60,7 @@ class TodoController extends Controller {
       die("Not todo owner");
     }
 
-    renderTemplate(
+    $this->view->renderTemplate(
       "views/todo_edit.php",
       array(
         'title' => 'Editing To Do',
@@ -84,7 +84,7 @@ class TodoController extends Controller {
     }
 
     toggleDoneToDo($id);
-    redirectRelative("index");
+    $this->view->redirectRelative("index");
   }
 
   function post_add() {
@@ -95,7 +95,7 @@ class TodoController extends Controller {
     }
     addToDo($description, $_SESSION['user']['id']);
     flash("Successfully added.");
-    redirectRelative("index");
+    $this->view->redirectRelative("index");
   }
 
   function validate_present($elements) {
@@ -129,7 +129,7 @@ class TodoController extends Controller {
     $description = safeParam($_POST, 'description');
     $done = safeParam($_POST, 'done');
     updateToDo($id, $description, $done);
-    redirectRelative("index");
+    $this->view->redirectRelative("index");
   }
 
   function post_delete($id) {
@@ -147,8 +147,8 @@ class TodoController extends Controller {
     }
 
     deleteToDo($id);
-    flash("Deleted.");
-    redirectRelative("index");
+    $this->view->flash("Deleted.");
+    $this->view->redirectRelative("index");
   }
 
 }
