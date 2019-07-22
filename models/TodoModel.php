@@ -70,14 +70,20 @@ class TodoModel extends Model {
 
   public function update() {
     $statement = self::$db -> prepare("UPDATE todo SET description = :description, done = :done WHERE id = :id");
-    $statement -> bindParam(':description', $description);
-    $statement -> bindParam(':done', $done);
-    $statement -> bindParam(':id', $id);
+    $statement -> bindParam(':description', $this->description);
+    $statement -> bindParam(':done', $this->done);
+    $statement -> bindParam(':id', $this->id);
     $statement -> execute();
-  }
-    
+    return $this;
   }
   
+  public function toggleDone() {
+    $this->done = $this->done ? 0 : 1;
+    $this->update();
+    return $this;
+  }
+
+/*  
   public static function toggleDoneToDo($id) {
     $todo = self::findToDoById($id);
     self::updateToDo($id, $todo['description'], $todo['done'] ? 0 : 1);
@@ -96,7 +102,7 @@ class TodoModel extends Model {
     $statement -> bindParam(':id', $id);
     $statement -> execute();
   }
-    
+*/  
 }
 
 ?>

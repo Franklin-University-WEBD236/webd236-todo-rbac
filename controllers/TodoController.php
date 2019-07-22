@@ -89,8 +89,7 @@ class TodoController extends Controller {
     if ($todo['user_id'] != $_SESSION['user']['id']) {
       die("Not todo owner");
     }
-
-    $this->model::toggleDoneToDo($id);
+    $todo->toggleDone();
     $this->view->redirectRelative("index");
   }
 
@@ -125,7 +124,6 @@ class TodoController extends Controller {
     if (!$todo) {
       die("No todo with id {$id} found.");
     }
-
     if ($todo['user_id'] != $_SESSION['user']['id']) {
       die("Not todo owner");
     }
@@ -134,9 +132,9 @@ class TodoController extends Controller {
     if ($errors) {
       die($errors);
     }
-    $description = safeParam($_POST, 'description');
-    $done = safeParam($_POST, 'done');
-    $this->model::updateToDo($id, $description, $done);
+    $todo->description = safeParam($_POST, 'description');
+    $todo->done = safeParam($_POST, 'done');
+    $todo->update();
     $this->view->redirectRelative("index");
   }
 
