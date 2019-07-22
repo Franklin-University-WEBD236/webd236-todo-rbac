@@ -1,6 +1,6 @@
 <?php
 
-class Model {
+class Model implements ArrayAccess {
   protected static $db = null;  
   private static $fieldNames = array('id');
   
@@ -29,6 +29,22 @@ class Model {
     $st = $this->db -> prepare($q);
     $st -> execute();
     return $st -> fetchAll(PDO::FETCH_ASSOC);
+  }
+  
+  public function offsetExists($offset) {
+    return isset($this->$offset);
+  }
+
+  public function offsetGet($offset) {
+    return $this->$offset;
+  }
+
+  public function offsetSet($offset , $value) {
+    $this->$offset = $value;
+  }
+
+  public function offsetUnset($offset) {
+    unset($this->$offset);
   }
 }
 Model::init();

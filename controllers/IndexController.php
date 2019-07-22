@@ -16,7 +16,6 @@ class IndexController extends Controller {
     $todos = null;
     $dones = null;
     if (isLoggedIn()) {
-      print_r($_SESSION['user']);
       $todos = $this->model::findAllCurrentToDos($_SESSION['user']->id);
       $dones = $this->model::findAllDoneToDos($_SESSION['user']->id);
     }
