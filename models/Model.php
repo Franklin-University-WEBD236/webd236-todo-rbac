@@ -2,13 +2,22 @@
 
 class Model {
   protected static $db = null;  
+  private static $fieldNames = array('id');
   protected $fields;
   
-  public function __construct($id = null) {
+  public function __construct($fields = null) {
     if (!isset($this->fields)) {
       $this->fields = array();
     }
-    $fields['id'] = $id;
+  
+    foreach (self::$fieldNames as $attribute) {
+      if (isset($fields[$attribute])) {
+        $this->fields[$attribute] = $fields[$attribute];
+      } else {
+        $this->fields[$attribute] = null;
+      }
+      }
+    }
   }
 
   public static function init() {

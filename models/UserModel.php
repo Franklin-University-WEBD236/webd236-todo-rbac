@@ -2,9 +2,18 @@
 include_once 'models/Model.php';
 
 class UserModel extends Model {
-  
-  public function __construct() {
-    parent::__construct();
+
+  private static $fieldNames = array('email', 'password', 'firstName', 'lastName')
+
+  public function __construct($fields = null) {
+    parent::__construct($fields);
+    foreach (self::$fieldNames as $attribute) {
+      if (isset($fields[$attribute])) {
+        $this->fields[$attribute] = $fields[$attribute];
+      } else {
+        $this->fields[$attribute] = null;
+      }
+    }
   }
   
   public static function findUserById($id) {

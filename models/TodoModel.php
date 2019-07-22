@@ -3,11 +3,17 @@ include_once 'models/Model.php';
 
 class TodoModel extends Model {
   
-  public function __construct($id = null, $description = null, $done = null, $user_id = null) {
-    parent::__construct($id);
-    $this->fields['description'] = $description;
-    $this->fields['done'] = $done;
-    $this->fields['user_id'] = $user_id;
+  private static $fieldNames = array('description', 'done', 'user_id');
+  
+  public function __construct($fields = null) {
+    parent::__construct($fields);
+    foreach (self::$fieldNames as $attribute) {
+      if (isset($fields[$attribute])) {
+        $this->fields[$attribute] = $fields[$attribute];
+      } else {
+        $this->fields[$attribute] = null;
+      }
+    }
   }
   
   public static function findToDoById($id) {
