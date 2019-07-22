@@ -23,6 +23,14 @@ class TodoModel extends Model {
     }
     return $todo;
   }
+  
+  private static function fromRows($rows) {
+    $result = array();
+    foreach ($rows as $row) {
+      $result[] = self::fromRow($row);
+    }
+    return $result;
+  }
 
   public static function findToDoById($id) {
     $st = self::$db -> prepare('SELECT * FROM todo WHERE id = ?');
@@ -35,24 +43,41 @@ class TodoModel extends Model {
     $st = self::$db -> prepare('SELECT * FROM todo WHERE done = 0 AND user_id = :user_id ORDER BY id');
     $st -> bindParam(':user_id', $user_id);
     $st -> execute();
-    return $st -> fetchAll(PDO::FETCH_ASSOC);
+    return self::fromRows($st -> fetchAll(PDO::FETCH_ASSOC));
   }
 
   public static function findAllDoneToDos($user_id) {
     $st = self::$db -> prepare('SELECT * FROM todo WHERE done != 0  AND user_id = :user_id ORDER BY id');
     $st -> bindParam(':user_id', $user_id);
     $st -> execute();
-    return $st -> fetchAll(PDO::FETCH_ASSOC);
+    return self::fromRows($st -> fetchAll(PDO::FETCH_ASSOC));
   }
 
-  public function addToDo($description, $user_id) {
+  public function insert() {
     $st = self::$db -> prepare("INSERT INTO todo (description, done, user_id) values (:description, 0, :user_id)");
-    $st -> bindParam(':description', $description);
-    $st -> bindParam(':user_id', $user_id);
+    $st -> bindParam(':description', $this->description);
+    $st -> bindParam(':user_id', $this->user_id);
     $st -> execute();
-    return self::$db->lastInsertId();
+    $this->id = self::$db->lastInsertId();
+    return $this;
   }
 
+  public function delete() {
+    $statement = self::$db -> prepare("DELETE FROM todo WHERE id = :id");
+    $statement -> bindParam(':id', $this->id);
+    $statement -> execute();
+  }
+
+  public function update() {
+    $statement = self::$db -> prepare("UPDATE todo SET description = :description, done = :done WHERE id = :id");
+    $statement -> bindParam(':description', $description);
+    $statement -> bindParam(':done', $done);
+    $statement -> bindParam(':id', $id);
+    $statement -> execute();
+  }
+    
+  }
+  
   public static function toggleDoneToDo($id) {
     $todo = self::findToDoById($id);
     self::updateToDo($id, $todo['description'], $todo['done'] ? 0 : 1);

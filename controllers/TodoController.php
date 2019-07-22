@@ -100,8 +100,9 @@ class TodoController extends Controller {
     if (!$description) {
       die("no description given");
     }
-    addToDo($description, $_SESSION['user']['id']);
-    flash("Successfully added.");
+    $todo = new TodoModel(array('description' => $description, 'user_id' => $_SESSION['user']['id']));
+    $todo->insert();
+    $this->view->flash("Successfully added.");
     $this->view->redirectRelative("index");
   }
 
@@ -152,8 +153,8 @@ class TodoController extends Controller {
     if ($todo['user_id'] != $_SESSION['user']['id']) {
       die("Not todo owner");
     }
-
-    $this->model::deleteToDo($id);
+    $todo->delete();
+    //$this->model::deleteToDo($id);
     $this->view->flash("Deleted.");
     $this->view->redirectRelative("index");
   }
