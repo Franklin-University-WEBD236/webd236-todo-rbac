@@ -2,8 +2,13 @@
 
 class Model {
   protected static $db = null;  
+  protected $fields;
   
-  public function __construct() {
+  public function __construct($id = null) {
+    if (!isset($this->fields)) {
+      $this->fields = array();
+    }
+    $fields['id'] = $id;
   }
 
   public static function init() {

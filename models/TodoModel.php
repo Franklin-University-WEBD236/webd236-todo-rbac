@@ -3,14 +3,11 @@ include_once 'models/Model.php';
 
 class TodoModel extends Model {
   
-  public function __construct() {
-    parent::__construct();
-    $this->fields = array(
-      "id" => null,
-      "description" => null,
-      
-    );
-    //description  done  id  user_id
+  public function __construct($id = null, $description = null, $done = null, $user_id = null) {
+    parent::__construct($id);
+    $this->fields['description'] = $description;
+    $this->fields['done'] = $done;
+    $this->fields['user_id'] = $user_id;
   }
   
   public static function findToDoById($id) {
