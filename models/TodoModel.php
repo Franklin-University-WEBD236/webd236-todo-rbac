@@ -7,21 +7,21 @@ class TodoModel extends Model {
     parent::__construct();
   }
   
-  public function findToDoById($id) {
+  public static function findToDoById($id) {
     $st = $this -> db -> prepare('SELECT * FROM todo WHERE id = ?');
     $st -> bindParam(1, $id);
     $st -> execute();
     return $st -> fetch(PDO::FETCH_ASSOC);
   }
 
-  public function findAllCurrentToDos($user_id) {
+  public static function findAllCurrentToDos($user_id) {
     $st = $this->db -> prepare('SELECT * FROM todo WHERE done = 0 AND user_id = :user_id ORDER BY id');
     $st -> bindParam(':user_id', $user_id);
     $st -> execute();
     return $st -> fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function findAllDoneToDos($user_id) {
+  public static function findAllDoneToDos($user_id) {
     $st = $this->db -> prepare('SELECT * FROM todo WHERE done != 0  AND user_id = :user_id ORDER BY id');
     $st -> bindParam(':user_id', $user_id);
     $st -> execute();
@@ -36,12 +36,12 @@ class TodoModel extends Model {
     return $this->db->lastInsertId();
   }
 
-  public function toggleDoneToDo($id) {
+  public static unction toggleDoneToDo($id) {
     $todo = $this->findToDoById($id);
     $this->updateToDo($id, $todo['description'], $todo['done'] ? 0 : 1);
   }
 
-  public function updateToDo($id, $description, $done) {
+  public static function updateToDo($id, $description, $done) {
     $statement = $this->db -> prepare("UPDATE todo SET description = :description, done = :done WHERE id = :id");
     $statement -> bindParam(':description', $description);
     $statement -> bindParam(':done', $done);
@@ -49,7 +49,7 @@ class TodoModel extends Model {
     $statement -> execute();
   }
 
-  public function deleteToDo($id) {
+  public static function deleteToDo($id) {
     $statement = $this->db -> prepare("DELETE FROM todo WHERE id = :id");
     $statement -> bindParam(':id', $id);
     $statement -> execute();

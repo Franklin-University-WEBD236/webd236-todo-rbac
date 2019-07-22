@@ -1,16 +1,18 @@
 <?php
 
 class Model {
-  protected $db;  
+  protected static $db;  
   
   public function __construct() {
+  }
+
+  public static function getDb() {
     try {
         $this->db = new PDO('sqlite:ToDoList.db3');
     } catch (PDOException $e) {
         die("Could not open database. " . $e->getMessage() . $e->getTraceAsString());
     }
   }
-
   public function adHocQuery($q) {
     $st = $this->db -> prepare($q);
     $st -> execute();

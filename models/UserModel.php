@@ -7,14 +7,14 @@ class UserModel extends Model {
     parent::__construct();
   }
   
-  public function findUserById($id) {
+  public static function findUserById($id) {
     $st = $this -> db -> prepare('SELECT * FROM user WHERE id = ?');
     $st -> bindParam(1, $id);
     $st -> execute();
     return $st -> fetch(PDO::FETCH_ASSOC);
   }
 
-  public function findByEmailAndPassword($email, $password) {
+  public static function findByEmailAndPassword($email, $password) {
     $st = $this -> db -> prepare('SELECT * FROM user WHERE email = :email AND password = :password');
     $st -> bindParam(':email', $email);
     $st -> bindParam(':password', $password);
@@ -22,13 +22,13 @@ class UserModel extends Model {
     return $st -> fetch(PDO::FETCH_ASSOC);
   }
 
-  public function findAllUsers() {
+  public static function findAllUsers() {
     $st = $this -> db -> prepare('SELECT * FROM user ORDER BY id');
     $st -> execute();
     return $st -> fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function addUser($email, $password, $firstName="", $lastName="") {
+  public static function addUser($email, $password, $firstName="", $lastName="") {
     $st = $this -> db -> prepare("INSERT INTO user (email, password, firstName, lastName) values (:email, :password, :firstName, :lastName)");
     $st -> bindParam(':email', $email);
     $st -> bindParam(':password', $password);
@@ -38,7 +38,7 @@ class UserModel extends Model {
     return $this -> db->lastInsertId();
   }
 
-  public function updateUser($id, $email, $password, $firstName, $lastName) {
+  public static function updateUser($id, $email, $password, $firstName, $lastName) {
     $st = $this -> db -> prepare("UPDATE user SET email = :email, password = :password, firstName = :firstName, lastName = :lastName WHERE id = :id");
     $st -> bindParam(':email', $email);
     $st -> bindParam(':password', $password);
