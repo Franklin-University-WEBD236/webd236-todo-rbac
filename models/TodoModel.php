@@ -16,7 +16,7 @@ class TodoModel extends Model {
     }
   }
   
-  private static function makeTodoFromRow($row) {
+  private static function fromRow($row) {
     $todo = null;
     if ($row) {
       $todo = new TodoModel($row);
@@ -28,7 +28,7 @@ class TodoModel extends Model {
     $st = self::$db -> prepare('SELECT * FROM todo WHERE id = ?');
     $st -> bindParam(1, $id);
     $st -> execute();
-    return self::makeTodoFromRow($st -> fetch(PDO::FETCH_ASSOC));
+    return self::fromRow($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public static function findAllCurrentToDos($user_id) {
