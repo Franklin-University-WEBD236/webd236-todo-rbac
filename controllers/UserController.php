@@ -38,7 +38,7 @@ class UserController extends Controller {
         )
       );
     } else {
-      $destination = isset($_SESSION['redirect']) ? $_SESSION['redirect'] : "";
+      $destination = isset($_SESSION['redirect']) ? $_SESSION['redirect'] : "/";
       restartSession();
       $_SESSION['user'] = $user;
       $this->view->flash("Login successful!");
