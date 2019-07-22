@@ -3,18 +3,13 @@
 class Model {
   protected static $db = null;  
   private static $fieldNames = array('id');
-  protected $fields;
   
   public function __construct($fields = null) {
-    if (!isset($this->fields)) {
-      $this->fields = array();
-    }
-  
     foreach (self::$fieldNames as $attribute) {
       if (isset($fields[$attribute])) {
-        $this->fields[$attribute] = $fields[$attribute];
+        $this->$attribute = $fields[$attribute];
       } else {
-        $this->fields[$attribute] = null;
+        $this->$attribute = null;
       }
     }
   }

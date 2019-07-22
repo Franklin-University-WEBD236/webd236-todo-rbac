@@ -9,9 +9,9 @@ class UserModel extends Model {
     parent::__construct($fields);
     foreach (self::$fieldNames as $attribute) {
       if (isset($fields[$attribute])) {
-        $this->fields[$attribute] = $fields[$attribute];
+        $this->$attribute = $fields[$attribute];
       } else {
-        $this->fields[$attribute] = null;
+        $this->$attribute = null;
       }
     }
   }
