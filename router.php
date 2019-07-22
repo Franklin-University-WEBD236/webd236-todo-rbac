@@ -13,6 +13,7 @@ function routeUrl() {
   # continued...
 
   $entity = array_values($requestURI);
+  echo (print_r($entity, true));
   $className = ucfirst($entity[0]) . 'Controller';
   $controller = 'controllers/' . $className . '.php';
   $func = strtolower($method) . '_' . (isset($entity[1]) ? $entity[1] : 'index');

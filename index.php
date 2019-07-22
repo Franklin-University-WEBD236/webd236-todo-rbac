@@ -1,7 +1,3 @@
 <?php
-    header("Location: /index");
-  include_once "controllers/TodoController.php";
-
-$controller = new TodoController();
-$controller -> get_list();
+header("Location: /index");
 ?>

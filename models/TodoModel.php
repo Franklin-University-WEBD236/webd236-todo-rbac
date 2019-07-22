@@ -37,8 +37,8 @@ class TodoModel extends Model {
   }
 
   public function toggleDoneToDo($id) {
-    $todo = findToDoById($id);
-    updateToDo($id, $todo['description'], $todo['done'] ? 0 : 1);
+    $todo = $this->findToDoById($id);
+    $this->updateToDo($id, $todo['description'], $todo['done'] ? 0 : 1);
   }
 
   public function updateToDo($id, $description, $done) {

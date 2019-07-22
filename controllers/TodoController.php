@@ -18,7 +18,7 @@ class TodoController extends Controller {
       die("No todo id specified");
     }
 
-    $todo = findToDoById($id);
+    $todo = $this->model->findToDoById($id);
     if (!$todo) {
       die("No todo with id $id found.");
     }
@@ -58,7 +58,7 @@ class TodoController extends Controller {
     if (!$id) {
       die("No todo specified");
     }
-    $todo = findToDoById($id);
+    $todo = $this->model->findToDoById($id);
     if (!$todo) {
       die("No todo with id {$id} found.");
     }
@@ -81,7 +81,7 @@ class TodoController extends Controller {
     if (!$id) {
       die("No todo specified");
     }
-    $todo = findToDoById($id);
+    $todo = $this->model->findToDoById($id);
     if (!$todo) {
       die("No todo with id {$id} found.");
     }
@@ -90,7 +90,7 @@ class TodoController extends Controller {
       die("Not todo owner");
     }
 
-    toggleDoneToDo($id);
+    $this->model->toggleDoneToDo($id);
     $this->view->redirectRelative("index");
   }
 
@@ -120,7 +120,7 @@ class TodoController extends Controller {
     if (!$id) {
       die("No todo specified");
     }
-    $todo = findToDoById($id);
+    $todo = $this->model->findToDoById($id);
     if (!$todo) {
       die("No todo with id {$id} found.");
     }
@@ -144,7 +144,7 @@ class TodoController extends Controller {
     if (!$id) {
       die("No todo specified");
     }
-    $todo = findToDoById($id);
+    $todo = $this->model->findToDoById($id);
     if (!$todo) {
       die("No todo with id {$id} found.");
     }

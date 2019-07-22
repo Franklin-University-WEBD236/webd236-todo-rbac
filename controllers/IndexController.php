@@ -1,11 +1,14 @@
 <?php
 include_once "controllers/Controller.php";
+include_once "models/TodoModel.php";
 include_once "include/util.php";
+
 
 class IndexController extends Controller {
 
   public function __construct() {
     parent::__construct();
+    $this->model = new TodoModel();
   }
 
   public function get_index() {
@@ -23,8 +26,6 @@ class IndexController extends Controller {
         'dones' => $dones
       )
     );
-  }
-
   }
 }
 ?>
