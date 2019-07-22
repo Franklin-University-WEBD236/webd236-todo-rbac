@@ -9,7 +9,7 @@ class TodoController extends Controller {
   
   public function __construct() {
     parent::__construct();
-    $this->model = new TodoModel();
+    $this->model = 'TodoModel';
   }
   
   function get_view($id) {
@@ -18,7 +18,7 @@ class TodoController extends Controller {
       die("No todo id specified");
     }
 
-    $todo = $this->model->findToDoById($id);
+    $todo = $this->model::findToDoById($id);
     if (!$todo) {
       die("No todo with id $id found.");
     }
@@ -40,8 +40,8 @@ class TodoController extends Controller {
     $todos = null;
     $dones = null;
     if (isLoggedIn()) {
-      $todos = $this->model->findAllCurrentToDos($_SESSION['user']['id']);
-      $dones = $this->model->findAllDoneToDos($_SESSION['user']['id']);
+      $todos = $this->model::findAllCurrentToDos($_SESSION['user']['id']);
+      $dones = $this->model::findAllDoneToDos($_SESSION['user']['id']);
     }
     $this->view->renderTemplate(
       "views/index.php",
@@ -58,7 +58,7 @@ class TodoController extends Controller {
     if (!$id) {
       die("No todo specified");
     }
-    $todo = $this->model->findToDoById($id);
+    $todo = $this->model::findToDoById($id);
     if (!$todo) {
       die("No todo with id {$id} found.");
     }
@@ -81,7 +81,7 @@ class TodoController extends Controller {
     if (!$id) {
       die("No todo specified");
     }
-    $todo = $this->model->findToDoById($id);
+    $todo = $this->model::findToDoById($id);
     if (!$todo) {
       die("No todo with id {$id} found.");
     }
@@ -90,7 +90,7 @@ class TodoController extends Controller {
       die("Not todo owner");
     }
 
-    $this->model->toggleDoneToDo($id);
+    $this->model::toggleDoneToDo($id);
     $this->view->redirectRelative("index");
   }
 
@@ -120,7 +120,7 @@ class TodoController extends Controller {
     if (!$id) {
       die("No todo specified");
     }
-    $todo = $this->model->findToDoById($id);
+    $todo = $this->model::findToDoById($id);
     if (!$todo) {
       die("No todo with id {$id} found.");
     }
@@ -144,7 +144,7 @@ class TodoController extends Controller {
     if (!$id) {
       die("No todo specified");
     }
-    $todo = $this->model->findToDoById($id);
+    $todo = $this->model::findToDoById($id);
     if (!$todo) {
       die("No todo with id {$id} found.");
     }

@@ -5,6 +5,12 @@ class TodoModel extends Model {
   
   public function __construct() {
     parent::__construct();
+    $this->fields = array(
+      "id" => null,
+      "description" => null,
+      
+    );
+    //description  done  id  user_id
   }
   
   public static function findToDoById($id) {

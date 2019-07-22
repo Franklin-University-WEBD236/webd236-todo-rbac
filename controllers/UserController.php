@@ -9,7 +9,7 @@ class UserController extends Controller {
   
   public function __construct() {
     parent::__construct();
-    $this->model = new UserModel;
+    $this->model = 'UserModel';
   }
 
   public function get_login() {
@@ -26,7 +26,7 @@ class UserController extends Controller {
     $email = safeParam($form, 'email');
     $password = safeParam($form, 'password');
 
-    $user = $this->model->findByEmailAndPassword($email, $password);
+    $user = $this->model::findByEmailAndPassword($email, $password);
     if (!$user) {
       $errors = array("Bad username/password combination");
       $this->view->renderTemplate(
@@ -112,9 +112,9 @@ class UserController extends Controller {
         )
       );
     } else {
-      $id = $this->model->addUser($form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
+      $id = $this->model::addUser($form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
       restartSession();
-      $user = $this->model->findUserById($id);
+      $user = $this->model::findUserById($id);
       $_SESSION['user'] = $user;
       $this->view->flash("Welcome to To Do List, {$user['firstName']}.");
       $this->view->redirectRelative("");
@@ -161,7 +161,7 @@ class UserController extends Controller {
         )
       );
     } else {
-      $this->model->updateUser($user['id'], $form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
+      $this->model::updateUser($user['id'], $form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
       $_SESSION['user'] = findUserById($user['id']);
       $this->view->flash("Profile updated");
       $this->view->redirectRelative("");
