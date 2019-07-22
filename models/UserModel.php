@@ -3,7 +3,7 @@ include_once 'models/Model.php';
 
 class UserModel extends Model {
 
-  private static $fieldNames = array('email', 'password', 'firstName', 'lastName')
+  private static $fieldNames = array('email', 'password', 'firstName', 'lastName');
 
   public function __construct($fields = null) {
     parent::__construct($fields);
@@ -16,11 +16,19 @@ class UserModel extends Model {
     }
   }
   
+  private static function makeUserFromRow($row) {
+    $user = null;
+    if ($row) {
+      $user = new UserModel($row);
+    }
+    return $user;
+  }
+
   public static function findUserById($id) {
     $st = self::$db -> prepare('SELECT * FROM user WHERE id = ?');
     $st -> bindParam(1, $id);
     $st -> execute();
-    return $st -> fetch(PDO::FETCH_ASSOC);
+    return self::makeUserFromRow($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public static function findByEmailAndPassword($email, $password) {
@@ -28,13 +36,7 @@ class UserModel extends Model {
     $st -> bindParam(':email', $email);
     $st -> bindParam(':password', $password);
     $st -> execute();
-    return $st -> fetch(PDO::FETCH_ASSOC);
-  }
-
-  public static function findAllUsers() {
-    $st = self::$db -> prepare('SELECT * FROM user ORDER BY id');
-    $st -> execute();
-    return $st -> fetchAll(PDO::FETCH_ASSOC);
+    return self::makeUserFromRow($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public static function addUser($email, $password, $firstName="", $lastName="") {

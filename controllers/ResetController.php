@@ -8,7 +8,6 @@ class ResetController extends Controller {
     parent::__construct();
   }
 
-
   public function post_index() {
     $output = `sqlite3 ToDoList.db3 < ToDoList.sql`;
     $this->view->redirectRelative("");

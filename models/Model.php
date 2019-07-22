@@ -16,7 +16,6 @@ class Model {
       } else {
         $this->fields[$attribute] = null;
       }
-      }
     }
   }
 
