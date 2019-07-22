@@ -129,13 +129,13 @@ class TodoController extends Controller {
       die("Not todo owner");
     }
 
-    $errors = validate_present(array('description', 'done'));
+    $errors = $this->validate_present(array('description', 'done'));
     if ($errors) {
       die($errors);
     }
     $description = safeParam($_POST, 'description');
     $done = safeParam($_POST, 'done');
-    updateToDo($id, $description, $done);
+    $this->model::updateToDo($id, $description, $done);
     $this->view->redirectRelative("index");
   }
 
@@ -153,7 +153,7 @@ class TodoController extends Controller {
       die("Not todo owner");
     }
 
-    deleteToDo($id);
+    $this->model::deleteToDo($id);
     $this->view->flash("Deleted.");
     $this->view->redirectRelative("index");
   }
