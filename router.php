@@ -35,6 +35,16 @@ function routeUrl() {
   exit();
 }
 
+spl_autoload_register(function ($name) {
+  foreach (array('controllers/', 'models/', 'include/') as $dir) {
+    $path = $dir . $name . '.php';
+    if (file_exists($path)) {
+      include_once($path);
+    }
+  }
+});
+
+
 // note, GDPR says that you need to notify about cookies like this.
 session_set_cookie_params(60*60*24*14, '/', $_SERVER['SERVER_NAME'], true, true);
 session_start();
