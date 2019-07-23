@@ -36,7 +36,7 @@ function routeUrl() {
 }
 
 spl_autoload_register(function ($name) {
-  foreach (array('controllers/', 'models/', 'include/') as $dir) {
+  foreach (array('controllers/', 'models/', 'include/', 'forms/') as $dir) {
     $path = $dir . $name . '.php';
     if (file_exists($path)) {
       include_once($path);

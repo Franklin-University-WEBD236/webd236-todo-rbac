@@ -99,6 +99,10 @@ class TodoController extends Controller {
     if (!$description) {
       die("no description given");
     }
+    $form = new TodoForm();
+    $form['description'] = $description;
+    $form->validate();
+    return;
     $todo = new TodoModel(array('description' => $description, 'user_id' => $_SESSION['user']['id']));
     $todo->insert();
     $this->view->flash("Successfully added.");
