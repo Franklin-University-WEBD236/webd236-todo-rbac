@@ -1,4 +1,5 @@
 <?php
+include_once('include/util.php');
 
 function routeUrl() {
   $method = $_SERVER['REQUEST_METHOD'];
@@ -36,12 +37,14 @@ function routeUrl() {
 }
 
 spl_autoload_register(function ($name) {
-  foreach (array('controllers/', 'models/', 'include/', 'forms/') as $dir) {
+  foreach (array('controllers/', 'models/', 'include/', 'forms/', 'views/') as $dir) {
     $path = $dir . $name . '.php';
     if (file_exists($path)) {
       include_once($path);
+      return;
     }
   }
+  die("Could not find class $name.");
 });
 
 

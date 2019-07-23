@@ -1,6 +1,4 @@
 <?php
-include_once "controllers/Controller.php";
-include_once "include/util.php";
 
 class ResetController extends Controller {
 

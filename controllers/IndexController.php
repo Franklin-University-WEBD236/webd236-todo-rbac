@@ -1,9 +1,4 @@
 <?php
-include_once "controllers/Controller.php";
-include_once "models/TodoModel.php";
-include_once "models/UserModel.php";
-include_once "include/util.php";
-
 
 class IndexController extends Controller {
 

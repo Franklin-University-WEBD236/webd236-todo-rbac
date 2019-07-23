@@ -1,5 +1,4 @@
 <?php
-include_once "views/View.php";
 
 class Controller {
   protected $view;

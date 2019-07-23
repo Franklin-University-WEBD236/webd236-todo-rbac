@@ -1,8 +1,4 @@
 <?php
-include_once "controllers/Controller.php";
-include_once "models/TodoModel.php";
-include_once "include/util.php";
-
 class TodoController extends Controller {
 
   protected $model;
@@ -95,7 +91,9 @@ class TodoController extends Controller {
 
   function post_add() {
     $this->ensureLoggedIn();
-    $form = new CreateTodoForm();
+    $form = new Form(array(
+      'description' => array('required'),
+    ));
     $form->load($_POST['form']);
     if ($form->validate()) {
       $todo = new TodoModel(array('description' => $form['description'], 'user_id' => $_SESSION['user']['id']));
@@ -131,7 +129,10 @@ class TodoController extends Controller {
     if ($todo['user_id'] != $_SESSION['user']['id']) {
       die("Not todo owner");
     }
-    $form = new EditTodoForm();
+    $form = new Form(array(
+      'description' => array('required'),
+      'done' => array('required'),
+    ));
     $form->load($_POST['form']);
     if ($form->validate()) {
       $todo->description = safeParam($_POST['form'], 'description');
