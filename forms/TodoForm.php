@@ -4,6 +4,7 @@ class TodoForm extends Form {
     parent::__construct(
       array(
         'description' => array('required'),
+        'done' => array('required'),
       )
     );
   }  

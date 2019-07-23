@@ -6,7 +6,10 @@ class View {
   }
   
   public function flash($message) {
-    $_SESSION['flash'] = $message;
+    if (!isset($_SESSION['flash'])) {
+      $_SESSION['flash'] = "";
+    }
+    $_SESSION['flash'] .= $message . '<br />';
   }
 
   public function redirect($url) {

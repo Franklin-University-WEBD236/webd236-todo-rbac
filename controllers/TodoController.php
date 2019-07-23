@@ -106,7 +106,7 @@ class TodoController extends Controller {
         $this->view->flash($error);
       }
     } else {
-      $todo = new TodoModel(array('description' => $description, 'user_id' => $_SESSION['user']['id']));
+      $todo = new TodoModel(array('description' => $form['description'], 'user_id' => $_SESSION['user']['id']));
       $todo->insert();
       $this->view->flash("Successfully added.");
     }
