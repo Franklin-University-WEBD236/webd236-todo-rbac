@@ -87,13 +87,6 @@ class View {
     }
     extract($params);
     include($cacheName);
-    return;
-    
-    ob_start();
-    eval("?>" . $contents);
-    $result = ob_get_contents();
-    ob_end_clean();
-    echo $result;
   }
 
   

@@ -1,4 +1,4 @@
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <title><?php echo($title); ?></title>
@@ -95,8 +95,8 @@
     <form action="/todo/edit/<?php echo($todo['id']); ?>" method="post">
       <div class="form-group">
         <label for="description">Make your changes below</label>
-        <input type="text" min="1" id="description" name="description" class="form-control" placeholder="Enter description" value="<?php echo($todo['description']); ?>" />
-        <input type="hidden" id="done" name="done" value="<?php echo($todo['done']); ?>" />
+        <input type="text" min="1" id="description" name="form[description]" class="form-control" placeholder="Enter description" value="<?php echo($todo['description']); ?>" />
+        <input type="hidden" id="done" name="form[done]" value="<?php echo($todo['done']); ?>" />
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Submit</button>

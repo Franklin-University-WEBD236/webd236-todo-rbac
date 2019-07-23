@@ -95,20 +95,16 @@ class TodoController extends Controller {
 
   function post_add() {
     $this->ensureLoggedIn();
-//    $description = safeParam($_POST, 'description', '');
-//    if (!$description) {
-//      die("no description given");
-//    }
     $form = new CreateTodoForm();
     $form->load($_POST['form']);
-    if (!$form->validate()) {
-      foreach ($form->getErrors() as $error) {
-        $this->view->flash($error);
-      }
-    } else {
+    if ($form->validate()) {
       $todo = new TodoModel(array('description' => $form['description'], 'user_id' => $_SESSION['user']['id']));
       $todo->insert();
       $this->view->flash("Successfully added.");
+    } else {
+      foreach ($form->getErrors() as $error) {
+        $this->view->flash($error);
+      }
     }
     $this->view->redirectRelative("index");
   }
@@ -135,15 +131,23 @@ class TodoController extends Controller {
     if ($todo['user_id'] != $_SESSION['user']['id']) {
       die("Not todo owner");
     }
-
-    $errors = $this->validate_present(array('description', 'done'));
-    if ($errors) {
-      die($errors);
+    $form = new EditTodoForm();
+    $form->load($_POST['form']);
+    if ($form->validate()) {
+      $todo->description = safeParam($_POST['form'], 'description');
+      $todo->done = safeParam($_POST['form'], 'done');
+      $todo->update();
+      $this->view->redirectRelative("index");
+    } else {
+      $this->view->renderTemplate(
+        "views/todo_edit.php",
+        array(
+          'title' => 'Editing To Do',
+          'todo' => $todo,
+          'errors' => $form->getErrors()
+        )
+      );
     }
-    $todo->description = safeParam($_POST, 'description');
-    $todo->done = safeParam($_POST, 'done');
-    $todo->update();
-    $this->view->redirectRelative("index");
   }
 
   function post_delete($id) {

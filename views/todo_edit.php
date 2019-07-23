@@ -6,8 +6,8 @@
     <form action="@@todo/edit/{{$todo['id']}}@@" method="post">
       <div class="form-group">
         <label for="description">Make your changes below</label>
-        <input type="text" min="1" id="description" name="description" class="form-control" placeholder="Enter description" value="{{$todo['description']}}" />
-        <input type="hidden" id="done" name="done" value="{{$todo['done']}}" />
+        <input type="text" min="1" id="description" name="form[description]" class="form-control" placeholder="Enter description" value="{{$todo['description']}}" />
+        <input type="hidden" id="done" name="form[done]" value="{{$todo['done']}}" />
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Submit</button>
