@@ -193,14 +193,13 @@ class UserController extends Controller {
       $errors = $form->getErrors();
     }
     if ($errors) {
-      die("<pre>" . print_r($errors, true) . "</pre>");
-
       $this->view->renderTemplate(
         "views/user_change_password.php",
         array(
           'title' => 'Change your password',
           'form' => $_POST['form'],
           'id' => $id,
+          'errors' => $errors,
         )
       );
     }
