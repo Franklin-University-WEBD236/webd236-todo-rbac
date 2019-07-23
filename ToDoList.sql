@@ -12,9 +12,15 @@ CREATE TABLE `user` (
   firstName TEXT NOT NULL,
   lastName TEXT NOT NULL
 );
+
+-- passwords:
+--  Arya: v@larM0rghul1s
+--  Theon: !r0nBorn
+--  Tyrion: th3Imp?!
+--  Todd: N1ceP@ssword
 INSERT INTO "user" VALUES(1,'nobody@nowhere.com','v@larM0rghul1s','Arya','Stark');
 INSERT INTO "user" VALUES(2,'ironborn@pyke.com','!r0nBorn','Theon','Greyjoy');
-INSERT INTO "user" VALUES(3,'alwayspayshisdebts@casterlyrock.com','th3Imp','Tyrion','Lannister');
+INSERT INTO "user" VALUES(3,'alwayspayshisdebts@casterlyrock.com','th3Imp?!','Tyrion','Lannister');
 INSERT INTO "user" VALUES(4,'todd.whittaker@franklin.edu','NicePassword','Todd','Whittaker');
 
 CREATE TABLE `todo` (
