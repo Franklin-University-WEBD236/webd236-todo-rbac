@@ -58,13 +58,13 @@ class UserModel extends Model {
     return self::$db->lastInsertId();
   }
 */
-  public static function updateUser($id, $email, $password, $firstName, $lastName) {
+  public function update() {
     $st = self::$db -> prepare("UPDATE user SET email = :email, password = :password, firstName = :firstName, lastName = :lastName WHERE id = :id");
-    $st -> bindParam(':email', $email);
-    $st -> bindParam(':password', $password);
-    $st -> bindParam(':firstName', $firstName);
-    $st -> bindParam(':lastName', $lastName);
-    $st -> bindParam(':id', $id);
+    $st -> bindParam(':email', $this->email);
+    $st -> bindParam(':password', $this->password);
+    $st -> bindParam(':firstName', $this->firstName);
+    $st -> bindParam(':lastName', $this->lastName);
+    $st -> bindParam(':id', $this->id);
     $st -> execute();
   }
 }

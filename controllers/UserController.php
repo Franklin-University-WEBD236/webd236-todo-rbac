@@ -136,7 +136,7 @@ class UserController extends Controller {
     $user = $_SESSION['user'];
 
     $this->view->renderTemplate(
-      "views/user_register.php",
+      "views/user_edit.php",
       array(
         'title' => 'Edit your profile',
         'action' => $this->view->url("user/edit/${user['id']}"),
@@ -156,23 +156,31 @@ class UserController extends Controller {
     if ($id != $user['id']) {
       die("Can't edit somebody else.");
     }
-    $form = safeParam($_POST, 'form');
-    $errors = verify_account($form);
-    if ($errors) {
+    
+    $form = new Form(array(
+      'firstName' => array('required'),
+      'lastName' => array('required'),
+      'email1' => array('email', array('same', 'email2')),
+    ));
+    $form->load($_POST['form']);
+    if ($form->validate()) {
+      $user->email = $form['email1'];
+      $user->firstName = $form['firstName'];
+      $user->lastName = $form['lastName'];
+      $user->update();
+      $this->view->flash("Profile updated");
+      $_SESSION['user'] = $user;
+      $this->view->redirectRelative("");
+    } else {
       $this->view->renderTemplate(
         "views/user_register.php",
         array(
           'title' => 'Edit your profile',
-          'form' => $form,
-          'errors' => $errors,
-          'action' => url("user/edit/${user['id']}"),
+          'form' => $_POST['form'],
+          'errors' => $form->getErrors(),
+          'action' => $this->view->url("user/edit/${user['id']}"),
         )
       );
-    } else {
-      $this->model::updateUser($user['id'], $form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
-      $_SESSION['user'] = findUserById($user['id']);
-      $this->view->flash("Profile updated");
-      $this->view->redirectRelative("");
     }
   }
 }
