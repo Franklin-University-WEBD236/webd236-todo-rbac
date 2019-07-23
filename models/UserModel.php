@@ -31,10 +31,9 @@ class UserModel extends Model {
     return self::makeUserFromRow($st -> fetch(PDO::FETCH_ASSOC));
   }
 
-  public static function findByEmailAndPassword($email, $password) {
-    $st = self::$db -> prepare('SELECT * FROM user WHERE email = :email AND password = :password');
+  public static function findByEmail($email) {
+    $st = self::$db -> prepare('SELECT * FROM user WHERE email = :email');
     $st -> bindParam(':email', $email);
-    $st -> bindParam(':password', $password);
     $st -> execute();
     return self::makeUserFromRow($st -> fetch(PDO::FETCH_ASSOC));
   }

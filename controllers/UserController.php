@@ -26,8 +26,8 @@ class UserController extends Controller {
     $email = safeParam($form, 'email');
     $password = safeParam($form, 'password');
 
-    $user = $this->model::findByEmailAndPassword($email, $password);
-    if (!$user) {
+    $user = $this->model::findByEmail($email);
+    if (!$user || !password_verify($password, $user->password)) {
       $errors = array("Bad username/password combination");
       $this->view->renderTemplate(
         "views/user_login.php",
@@ -100,7 +100,7 @@ class UserController extends Controller {
 
   public function post_register() {
     $form = safeParam($_POST, 'form');
-    $errors = verify_account($form);
+    $errors = $this->verify_account($form);
     if ($errors) {
       $this->view->renderTemplate(
         "views/user_register.php",
@@ -112,7 +112,7 @@ class UserController extends Controller {
         )
       );
     } else {
-      $id = $this->model::addUser($form['email1'], $form['password1'], $form['firstName'], $form['lastName']);
+      $id = $this->model::addUser($form['email1'], password_hash($form['password1'], PASSWORD_DEFAULT), $form['firstName'], $form['lastName']);
       restartSession();
       $user = $this->model::findUserById($id);
       $_SESSION['user'] = $user;

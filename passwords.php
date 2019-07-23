@@ -7,5 +7,9 @@ $passwords = array(
   'Todd' => 'N1ceP@ssword',
 );
 
-foreach ($passwords as $name)
+foreach ($passwords as $name => $plaintext) {
+  $hash = password_hash($plaintext, PASSWORD_DEFAULT);
+  echo "$name has password $plaintext hashed as $hash\n";
+}
+
 ?>
