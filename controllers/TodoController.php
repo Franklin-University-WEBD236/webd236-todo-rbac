@@ -95,21 +95,21 @@ class TodoController extends Controller {
 
   function post_add() {
     $this->ensureLoggedIn();
-    $description = safeParam($_POST, 'description', '');
+//    $description = safeParam($_POST, 'description', '');
 //    if (!$description) {
 //      die("no description given");
 //    }
     $form = new TodoForm();
-    $form['description'] = $description;
+    $form->load($_POST);
     if (!$form->validate()) {
       foreach ($form->getErrors() as $error) {
-        echo $error . '<br />';
+        $this->view->flash($error);
       }
-    };
-    return;
-    $todo = new TodoModel(array('description' => $description, 'user_id' => $_SESSION['user']['id']));
-    $todo->insert();
-    $this->view->flash("Successfully added.");
+    } else {
+      $todo = new TodoModel(array('description' => $description, 'user_id' => $_SESSION['user']['id']));
+      $todo->insert();
+      $this->view->flash("Successfully added.");
+    }
     $this->view->redirectRelative("index");
   }
 

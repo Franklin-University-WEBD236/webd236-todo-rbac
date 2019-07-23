@@ -32,6 +32,17 @@ class Form implements ArrayAccess {
     return count($this->errors) == 0;
   }
   
+  public function load($fields) {
+    foreach ($array as $key => $value) {
+      echo ("loading ($key, $value)");
+      die();
+      if (!isset($this->data[$key])) {
+        throw new Exception("$key is not in the form");
+      }
+      $this->data[$key] = $value;
+    }
+  }
+  
   public function getErrors() {
     $result = array();
     foreach ($this->errors as $key => $errors) {
