@@ -157,12 +157,13 @@ class UserController extends Controller {
     $this->view->renderTemplate(
       "views/user_change_password.php",
       array(
-        'title' => 'Change your profile',
+        'title' => 'Change your password',
         'form' => array(
           'currentPassword' => '',
           'newPassword1' => '',
           'newPassword2' => '',
-        )
+        ),
+        'id' => $id,
       )
     );
   }
@@ -171,31 +172,38 @@ class UserController extends Controller {
     $this->ensureLoggedIn();
     $user = $_SESSION['user'];
     if ($id != $user->id) {
-      die("Can't change someone elses password.")
+      die("Can't change someone elses password.");
     }
     $form = new Form(array(
       'currentPassword' => array('required'),
       'newPassword1' => array('password', array('same', 'newPassword2')),
     ));
     $form->load($_POST['form']);
+    $errors = array();
     if ($form->validate()) {
       if (password_verify($form['currentPassword'], $user->password)) {
-                
+        $user->password = password_hash($form['newPassword1'], PASSWORD_DEFAULT);
+        $user->update();
+        $this->view->flash("Password updated");
+        $this->view->redirectRelative("");
+      } else {
+        $errors[] = "Invalid current password.";
       }
-    }  {
-      die("Can update user");
+    } else {
+      $errors = $form->getErrors();
     }
-    $this->view->renderTemplate(
-      "views/user_change_password.php",
-      array(
-        'title' => 'Change your profile',
-        'form' => array(
-          'currentPassword' => '',
-          'newPassword1' => '',
-          'newPassword2' => '',
+    if ($errors) {
+      die("<pre>" . print_r($errors, true) . "</pre>");
+
+      $this->view->renderTemplate(
+        "views/user_change_password.php",
+        array(
+          'title' => 'Change your password',
+          'form' => $_POST['form'],
+          'id' => $id,
         )
-      )
-    );
+      );
+    }
   }
 
   public function post_edit($id) {

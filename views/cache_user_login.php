@@ -35,7 +35,8 @@
               <span class="material-icons" style="vertical-align:bottom">account_circle</span> <?php echo($_SESSION['user']['firstName']); ?> <?php echo($_SESSION['user']['lastName']); ?>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="/user/edit">Edit profile</a>
+              <a class="dropdown-item" href="/user/edit/<?php echo($_SESSION['user']->id); ?>">Edit profile</a>
+              <a class="dropdown-item" href="/user/password/<?php echo($_SESSION['user']->id); ?>">Change password</a>
               <a class="dropdown-item" href="/user/logout">Logout</a>
             </div>
           </li>
