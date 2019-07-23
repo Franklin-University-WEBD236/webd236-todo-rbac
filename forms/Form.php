@@ -23,7 +23,8 @@ class Form implements ArrayAccess {
         $func = $validator;
         if (is_array($validator)) {
           $func = $validator[0];
-          $result = self::$func($key, $this->data[$key], $this->data[$validator[1]]);
+          $key2 = $validator[1];
+          $result = self::$func($key, $key2, $this->data[$key], $this->data[$key2]);
         } else {
           $result = self::$func($key, $this->data[$key]);
         }
@@ -146,9 +147,9 @@ class Form implements ArrayAccess {
     return false;
   }
   
-  public static function same($key, $value1, $value2) {
+  public static function same($key1, $key2, $value1, $value2) {
     if ($value1 != $value2) {
-      return self::fieldToHuman($key) . ' do not match';
+      return self::fieldToHuman($key1) . ' and ' . self::fieldToHuman($key2) . ' do not match';
     }
     return false;
   }

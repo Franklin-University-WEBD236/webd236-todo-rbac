@@ -105,32 +105,30 @@ class UserController extends Controller {
       'password1' => array('password', array('same', 'password2')),
       'email1' => array('email', array('same', 'email2')),
     ));
-    
     $form->load($_POST['form']);
     if ($form->validate()) {
-      die("validated fine");
-    }
-    die('<pre>' . print_r($form->getErrors(), true) . '</pre>');
-    
-    $form = safeParam($_POST, 'form');
-    $errors = $this->verify_account($form);
-    if ($errors) {
-      $this->view->renderTemplate(
-        "views/user_register.php",
-        array(
-          'title' => 'Create an account',
-          'form' => $form,
-          'errors' => $errors,
-          'action' => url('user/register'),
-        )
-      );
-    } else {
+      $user = new UserModel(array(
+        'email' => $_POST['email1'],
+        'password' => $_POST['email1'],
+        'firstName',
+        'lastName'
+      ));
       $id = $this->model::addUser($form['email1'], password_hash($form['password1'], PASSWORD_DEFAULT), $form['firstName'], $form['lastName']);
       restartSession();
       $user = $this->model::findUserById($id);
       $_SESSION['user'] = $user;
       $this->view->flash("Welcome to To Do List, {$user['firstName']}.");
       $this->view->redirectRelative("");
+    } else {
+      $this->view->renderTemplate(
+        "views/user_register.php",
+        array(
+          'title' => 'Create an account',
+          'form' => $_POST['form'],
+          'errors' => $form->getErrors(),
+          'action' => $this->view->url('user/register'),
+        )
+      );
     }
   }
 
