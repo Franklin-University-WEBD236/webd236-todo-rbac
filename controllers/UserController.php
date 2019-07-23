@@ -150,6 +150,25 @@ class UserController extends Controller {
     );
   }
 
+  public function get_password($id) {
+    $this->ensureLoggedIn();
+    $user = $_SESSION['user'];
+
+    $this->view->renderTemplate(
+      "views/user_change_password.php",
+      array(
+        'title' => 'Change your profile',
+        'action' => $this->view->url("user/edit/${user['id']}"),
+        'form' => array(
+          'firstName' => $user['firstName'],
+          'lastName'  => $user['lastName'],
+          'email1'    => $user['email'],
+          'email2'    => $user['email'],
+        )
+      )
+    );
+  }
+
   public function post_edit($id) {
     $this->ensureLoggedIn();
     $user=$_SESSION['user'];
