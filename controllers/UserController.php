@@ -108,14 +108,13 @@ class UserController extends Controller {
     $form->load($_POST['form']);
     if ($form->validate()) {
       $user = new UserModel(array(
-        'email' => $_POST['email1'],
-        'password' => $_POST['email1'],
-        'firstName',
-        'lastName'
+        'email' => $form['email1'],
+        'password' => password_hash($form['password1'], PASSWORD_DEFAULT),
+        'firstName' => $form['firstName'],
+        'lastName' => $form['lastName'],
       ));
-      $id = $this->model::addUser($form['email1'], password_hash($form['password1'], PASSWORD_DEFAULT), $form['firstName'], $form['lastName']);
+      $user->insert();
       restartSession();
-      $user = $this->model::findUserById($id);
       $_SESSION['user'] = $user;
       $this->view->flash("Welcome to To Do List, {$user['firstName']}.");
       $this->view->redirectRelative("");
@@ -146,8 +145,6 @@ class UserController extends Controller {
           'lastName'  => $user['lastName'],
           'email1'    => $user['email'],
           'email2'    => $user['email'],
-          'password1' => $user['password'],
-          'password2' => $user['password'],
         )
       )
     );
