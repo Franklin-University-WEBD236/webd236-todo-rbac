@@ -20,7 +20,11 @@ class Form implements ArrayAccess {
   public function validate() {
     foreach ($this->validators as $key => $validators) {
       foreach ($validators as $validator) {
-        $result = self::$validator($key, $this->data[$key]);
+        if (is_array($validator)) {
+          
+        } else {
+          $result = self::$validator($key, $this->data[$key]);
+        }
         if ($result) {
           if (!isset($this->errors[$key])) {
             $this->errors[$key] = array();
@@ -51,12 +55,22 @@ class Form implements ArrayAccess {
     return $result;
   }
 
+  private static function fieldToHuman($str) {
+    $str = preg_replace('/(?!^)[A-Z]{2,}(?=[A-Z][a-z])|[A-Z][a-z]|[0-9]{1,}/', ' $0', $str);
+    $str = preg_replace('/[_]/', ' ', $str);
+    return ucfirst(strtolower($str));
+  }
+  
+  public static function optional($key, $value) {
+    return false;
+  }
+  
   public static function required($key, $value) {
-    return strlen(trim($value)) ? false : "$key is required";
+    return strlen(trim($value)) ? false : self::fieldToHuman($key) . " is required";
   }
   
   public static function password($key, $value) {
-    return strlen(trim($value)) >= 8 ? false : "$key must be 8 or more characters";
+    return strlen(trim($value)) >= 8 ? false : self::fieldToHuman($key) . " must be 8 or more characters";
   }
   
   public function offsetExists($offset) {
