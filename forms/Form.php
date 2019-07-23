@@ -52,11 +52,11 @@ class Form implements ArrayAccess {
   }
 
   public static function required($key, $value) {
-    return trim($value) ? false : "$key is required";
+    return strlen(trim($value)) ? false : "$key is required";
   }
   
   public static function password($key, $value) {
-    return strlen(trim($value)) >= 8;
+    return strlen(trim($value)) >= 8 ? false : "$key must be 8 or more characters";
   }
   
   public function offsetExists($offset) {

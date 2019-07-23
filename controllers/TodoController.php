@@ -99,8 +99,8 @@ class TodoController extends Controller {
 //    if (!$description) {
 //      die("no description given");
 //    }
-    $form = new TodoForm();
-    $form->load($_POST);
+    $form = new CreateTodoForm();
+    $form->load($_POST['form']);
     if (!$form->validate()) {
       foreach ($form->getErrors() as $error) {
         $this->view->flash($error);

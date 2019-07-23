@@ -70,7 +70,7 @@ class View {
       $contents = file_get_contents($cacheName);
     } else {
       # we need to build the file (doesn't exist or template is newer)
-      $contents = '?>' . $this->__importTemplate(array('unused', $view));
+      $contents = $this->__importTemplate(array('unused', $view));
 
       $contents = preg_replace_callback('/@@\s*(.*)\s*@@/U', array($this, '__resolveRelativeUrls'), $contents);
 

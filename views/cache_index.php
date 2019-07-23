@@ -1,4 +1,4 @@
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <title><?php echo($title); ?></title>
@@ -109,7 +109,6 @@
       <div class="form-group">
         <label for="description">Add a new todo.</label>
         <input type="text" min="1" id="description" name="form[description]" class="form-control" placeholder="Enter description" value=""/>
-        <input type="hidden" min="1" id="description" name="form[done]" class="form-control" placeholder="Enter description" value=""/>
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Submit</button>

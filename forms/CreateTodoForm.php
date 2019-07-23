@@ -1,10 +1,9 @@
 <?php
-class TodoForm extends Form {
+class CreateTodoForm extends Form {
   public function __construct() {
     parent::__construct(
       array(
         'description' => array('required'),
-        'done' => array('required'),
       )
     );
   }  
