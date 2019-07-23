@@ -18,7 +18,6 @@ class Form implements ArrayAccess {
   }
   
   public function validate() {
-    echo ("in validate");
     foreach ($this->validators as $key => $validators) {
       foreach ($validators as $validator) {
         $result = self::$validator($key, $this->data[$key]);
@@ -30,10 +29,20 @@ class Form implements ArrayAccess {
         }
       }
     }
+    return count($this->errors) == 0;
+  }
+  
+  public function getErrors() {
+    $result = array();
+    foreach ($this->errors as $key => $errors) {
+      foreach ($errors as $error) {
+        $result[] = $error;
+      }
+    }
+    return $result;
   }
 
   public static function required($key, $value) {
-    echo("in required function");
     return trim($value) ? false : "$key is required";
   }
   
