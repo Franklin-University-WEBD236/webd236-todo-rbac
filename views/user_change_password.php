@@ -11,7 +11,7 @@
             <input type="password" min="1" id="currentPassword" name="form[currentPassword]" class="form-control" placeholder="Enter current password" value="{{value($form['currentPassword'])}}" />
           </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
           <div class="col">
             <label for="newPassword1">New password</label>
             <input type="text" min="1" id="newPassword1" name="form[newPassword1]" class="form-control" placeholder="Enter new password" value="{{value($form['newPassword1'])}}" />
