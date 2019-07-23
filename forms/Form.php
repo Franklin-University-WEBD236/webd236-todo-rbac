@@ -20,10 +20,12 @@ class Form implements ArrayAccess {
   public function validate() {
     foreach ($this->validators as $key => $validators) {
       foreach ($validators as $validator) {
+        $func = $validator;
         if (is_array($validator)) {
-          
+          $func = $validator[0];
+          $result = self::$func($key, $this->data[$key], $this->data[$validator[1]]);
         } else {
-          $result = self::$validator($key, $this->data[$key]);
+          $result = self::$func($key, $this->data[$key]);
         }
         if ($result) {
           if (!isset($this->errors[$key])) {
@@ -38,9 +40,6 @@ class Form implements ArrayAccess {
   
   public function load($fields) {
     foreach ($fields as $key => $value) {
-      if (!isset($this->data[$key])) {
-        throw new Exception("$key is not in the form");
-      }
       $this->data[$key] = $value;
     }
   }
@@ -84,7 +83,7 @@ class Form implements ArrayAccess {
   public static function integer($key, $value) {
     $pattern = '/^\d+$/';
     if (!preg_match($pattern, $value)) {
-      return $value . " is not a valid " . self::fieldToHuman($key);
+      return "'$value' is not a valid " . self::fieldToHuman($key);
     }
     return false;
   }
@@ -92,7 +91,7 @@ class Form implements ArrayAccess {
   public static function float($key, $value) {
     $pattern = '/^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/';
     if (!preg_match($pattern, $value)) {
-      return $value . " is not a valid " . self::fieldToHuman($key);
+      return "'$value' is not a valid " . self::fieldToHuman($key);
     }
     return false;
   }
@@ -100,7 +99,7 @@ class Form implements ArrayAccess {
   public static function money($key, $value) {
     $pattern = '/^\$?\d+([.]?\d{2})?$/';
     if (!preg_match($pattern, $value)) {
-      return $value . " is not a valid " . self::fieldToHuman($key);
+      return "'$value' is not a valid " . self::fieldToHuman($key);
     }
     return false;
   }
@@ -142,7 +141,7 @@ class Form implements ArrayAccess {
     '(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9])))' .
     '{3}))\]))$/iD';
     if (!preg_match($pattern, $value)) {
-      return $value . " is not a valid email address";
+      return "'$value' is not a valid email address";
     }
     return false;
   }

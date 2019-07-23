@@ -102,17 +102,15 @@ class UserController extends Controller {
     $form = new Form(array(
       'firstName' => array('required'),
       'lastName' => array('required'),
-      'password1' => array('required', 'password', array('same', 'password2')),
-      'password2' => array('required', 'password'),
-      'email1' => array('required', 'email', array('same', 'email2')),
-      'email2' => array('required', 'email'),
+      'password1' => array('password', array('same', 'password2')),
+      'email1' => array('email', array('same', 'email2')),
     ));
     
     $form->load($_POST['form']);
     if ($form->validate()) {
       die("validated fine");
     }
-    die(print_r($form->getErrors(), true));
+    die('<pre>' . print_r($form->getErrors(), true) . '</pre>');
     
     $form = safeParam($_POST, 'form');
     $errors = $this->verify_account($form);
