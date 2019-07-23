@@ -114,7 +114,7 @@ class Form implements ArrayAccess {
     );
     foreach ($patterns as $pattern) {
       if (!preg_match($pattern, $value)) {
-        return self::fieldToHuman($key) . ' must be at least 8 characters, contain an upper case, digit, and symbol.'
+        return self::fieldToHuman($key) . ' must be at least 8 characters, contain an upper case, digit, and symbol.';
       }
     }
     return false;
@@ -148,7 +148,10 @@ class Form implements ArrayAccess {
   }
   
   public static function same($key, $value1, $value2) {
-    
+    if ($value1 != $value2) {
+      return self::fieldToHuman($key) . ' do not match';
+    }
+    return false;
   }
   
   public function offsetExists($offset) {
