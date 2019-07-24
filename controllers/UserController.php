@@ -103,7 +103,7 @@ class UserController extends Controller {
     $validator = new Validator();
     $validator->required('firstName', safeParam($form, 'firstName'), "First name is required.");
     $validator->required('lastName', safeParam($form, 'lastName'), "Last name is required.");
-    $validator->password('password1', safeParam($form, 'password1'), "Password must have at least 8 characters, a number, an uppercase, and a symbol");
+    $validator->password('password1', safeParam($form, 'password1'), "Password must have at least 8 characters, a number, an uppercase, and a symbol.");
     $validator->same('password2', safeParam($form, 'password1'), safeParam($form, 'password2'), "Passwords must match.");
     $validator->email('email1', safeParam($form, 'email1'), "Invalid email address given.");
     $validator->same('email2', safeParam($form, 'email1'), safeParam($form, 'email2'), "Email addresses must match.");
@@ -175,14 +175,16 @@ class UserController extends Controller {
     if ($id != $user->id) {
       die("Can't change someone elses password.");
     }
-    $form = new Form(array(
-      'currentPassword' => array('required'),
-      'newPassword1' => array('password', array('same', 'newPassword2')),
-    ));
-    $form->load($_POST['form']);
-    $errors = array();
-    if ($form->validate()) {
-      if (password_verify($form['currentPassword'], $user->password)) {
+    $form = safeParam($_POST, 'form');
+    if (!$form) {
+      die("No data submitted.");
+    }
+    $validator = new Validator();
+    $validator->required('currentPassword', safeParam($form, 'currentPassword'), "Current password is required.");
+    $validator->passwordMatch('currentPassword', $user->password, safeParam($form, 'currentPassword'), "Incorrect current password.");
+    $validator->password('newPassword1', safeParam($form, 'newPassword1'), "Password must have at least 8 characters, a number, an uppercase, and a symbol.")
+    $validator->same('newPassword2', safeParam($form, 'newPassword1'), safeParam($form, 'newPassword2'), "Passwords must match.");
+    if (!$validator->hasErrors()) {
         $user->password = password_hash($form['newPassword1'], PASSWORD_DEFAULT);
         $user->update();
         $this->view->flash("Password updated");

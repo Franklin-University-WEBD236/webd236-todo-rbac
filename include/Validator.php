@@ -119,6 +119,16 @@ class Validator {
     return true;
   }
   
+  public function passwordMatch($key, $hash, $plaintext, $message=false) {
+    if (!$message) {
+      $message = self::fieldToHuman($key) . " is incorrect.";
+    }
+    if (!password_verify($hash, $plaintext)) {
+      $this -> addError($key, $message);
+      return false;
+    }
+    return true;
+  }
   public function same($key, $value1, $value2, $message = false) {
     if (!$message) {
       $message = self::fieldToHuman($key) . " must be the same.";
