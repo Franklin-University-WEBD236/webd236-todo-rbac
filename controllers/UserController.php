@@ -59,42 +59,6 @@ class UserController extends Controller {
     );
   }
 
-  private function verify_account($form) {
-    $errors = array();
-
-    if (!$form) {
-      $errors[] = "No data submitted";
-      return $errors;
-    }
-
-    $email1 = safeParam($form, 'email1');
-    if (!$email1) {
-      $errors['email1'] = "An email address must be provided";
-    }
-    $email2 = safeParam($form, 'email2');
-    if ($email1 != $email2) {
-      $errors['email2'] = "Email addresses must match";
-    }
-    $password1 = safeParam($form, 'password1');
-    if (!$password1 || strlen($password1) < 8) {
-      $errors['password1'] = "Passwords must be at least 8 characters long";
-    }
-    $password2 = safeParam($form, 'password2');
-    if ($password1 != $password2) {
-      $errors['password1'] = "Passwords must match";
-    }
-    $firstName = safeParam($form, 'firstName');
-    if (!$firstName) {
-      $errors['firstName'] = "A first name must be provided";
-    }
-    $lastName = safeParam($form, 'lastName');
-    if (!$lastName) {
-      $errors['lastName'] = "A last name must be provided";
-    }
-
-    return $errors;
-  }
-
   public function post_register() {
     $form = safeParam($_POST, 'form');
     if (!$form) {
@@ -132,10 +96,12 @@ class UserController extends Controller {
     }
   }
 
-  public function get_edit() {
+  public function get_edit($id) {
     $this->ensureLoggedIn();
-    $user = $_SESSION['user'];
-
+    if ($id != $_SESSION['user']->id) {
+      die ("Can't edit someone elses profile.");
+    }
+    $user = $this->model::findUserById($id);
     $this->view->renderTemplate(
       "views/user_edit.php",
       array(
@@ -153,8 +119,10 @@ class UserController extends Controller {
 
   public function get_password($id) {
     $this->ensureLoggedIn();
-    $user = $_SESSION['user'];
-
+    if ($id != $_SESSION['user']->id) {
+      die("Can't change someone elses password.");
+    }
+    $user = $this->model::findUserByID($id);
     $this->view->renderTemplate(
       "views/user_change_password.php",
       array(
@@ -171,8 +139,8 @@ class UserController extends Controller {
 
   public function post_password($id) {
     $this->ensureLoggedIn();
-    $user = $_SESSION['user'];
-    if ($id != $user->id) {
+    $user = $this->model::findUserByID($id);
+    if ($id != $_SESSION['user']->id) {
       die("Can't change someone elses password.");
     }
     $form = safeParam($_POST, 'form');
@@ -209,14 +177,16 @@ class UserController extends Controller {
     if ($id != $user['id']) {
       die("Can't edit somebody else.");
     }
-    
-    $form = new Form(array(
-      'firstName' => array('required'),
-      'lastName' => array('required'),
-      'email1' => array('email', array('same', 'email2')),
-    ));
-    $form->load($_POST['form']);
-    if ($form->validate()) {
+    $form = safeParam($_POST, 'form');
+    if (!$form) {
+      die("no data submitted.");
+    }
+    $validator = new Validator();
+    $validator->required('firstName', safeParam($form, 'firstName'), "First name is required.");
+    $validator->required('lastName', safeParam($form, 'lastName'), "Last name is required.");
+    $validator->email('email1', safeParam($form, 'email1'), "Invalid email address given.");
+    $validator->same('email2', safeParam($form, 'email1'), safeParam($form, 'email2'), "Email addresses must match.");
+    if (!$validator->hasErrors()) {
       $user->email = $form['email1'];
       $user->firstName = $form['firstName'];
       $user->lastName = $form['lastName'];
@@ -226,7 +196,7 @@ class UserController extends Controller {
       $this->view->redirectRelative("");
     } else {
       $this->view->renderTemplate(
-        "views/user_register.php",
+        "views/user_edit.php",
         array(
           'title' => 'Edit your profile',
           'form' => $_POST['form'],
