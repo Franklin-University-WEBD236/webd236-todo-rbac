@@ -91,11 +91,10 @@ class TodoController extends Controller {
 
   function post_add() {
     $this->ensureLoggedIn();
-    $form = new Form(array(
-      'description' => array('required'),
-    ));
-    $form->load($_POST['form']);
-    if ($form->validate()) {
+    $formData = safeParam($_POST, 'form');
+    $validator = new Validator();
+    $validator->required('description', safeParam($formData, 'description', "A description is required."));
+    if (!$validator->hasErrors()) {
       $todo = new TodoModel(array('description' => $form['description'], 'user_id' => $_SESSION['user']['id']));
       $todo->insert();
       $this->view->flash("Successfully added.");
@@ -129,14 +128,13 @@ class TodoController extends Controller {
     if ($todo['user_id'] != $_SESSION['user']['id']) {
       die("Not todo owner");
     }
-    $form = new Form(array(
-      'description' => array('required'),
-      'done' => array('required'),
-    ));
-    $form->load($_POST['form']);
-    if ($form->validate()) {
-      $todo->description = safeParam($_POST['form'], 'description');
-      $todo->done = safeParam($_POST['form'], 'done');
+    $formData = safeParam($_POST, 'form');
+    $validator = new Validator();
+    $validator->required('description', safeParam($formData, 'description', "A description is required."));
+    $validator->required('done', safeParam($formData, 'done', 'Done status is required.'));
+    if (!$validator->hasErrors()) {
+      $todo->description = safeParam($formData, 'description');
+      $todo->done = safeParam($formData, 'done');
       $todo->update();
       $this->view->redirectRelative("index");
     } else {
@@ -145,7 +143,7 @@ class TodoController extends Controller {
         array(
           'title' => 'Editing To Do',
           'todo' => $todo,
-          'errors' => $form->getErrors()
+          'errors' => $validator->allErrors(),
         )
       );
     }
