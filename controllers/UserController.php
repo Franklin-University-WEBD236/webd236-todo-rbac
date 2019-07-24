@@ -200,7 +200,7 @@ class UserController extends Controller {
         array(
           'title' => 'Edit your profile',
           'form' => $_POST['form'],
-          'errors' => $form->getErrors(),
+          'errors' => $validator->allErrors(),
           'action' => $this->view->url("user/edit/${user['id']}"),
         )
       );

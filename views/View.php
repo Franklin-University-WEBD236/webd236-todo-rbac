@@ -89,6 +89,16 @@ class View {
     include($cacheName);
   }
 
-  
+  function checked(&$something, $compare) {
+    if (isset($something) && (is_array($something) && in_array($compare, $something) || $something == $compare)) {
+      return "checked";
+    }
+    return "";
+  }
+
+  function value(&$something, $default = "") {
+    return isset($something) ? $something : $default;
+  }
+
 }
 ?>
