@@ -1,5 +1,5 @@
 <?php
-include_once('include/util.php');
+include_once 'include/util.php';
 
 function routeUrl() {
   $method = $_SERVER['REQUEST_METHOD'];
@@ -25,7 +25,7 @@ function routeUrl() {
     die("Controller '$controller' doesn't exist.");
   }
 
-  require $controller;
+  // require $controller; // no longer needed due to auto loader
   $object = new $className();
   
   if (!method_exists($object, $func)) {

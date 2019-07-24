@@ -1,7 +1,4 @@
 <?php
-include_once "controllers/Controller.php";
-include_once "models/UserModel.php";
-include_once "include/util.php";
 
 class UserController extends Controller {
 
