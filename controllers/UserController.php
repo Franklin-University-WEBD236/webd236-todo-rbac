@@ -96,6 +96,14 @@ class UserController extends Controller {
   }
 
   public function post_register() {
+    $form = safeParam($_POST, 'form');
+    if (!$form) {
+      die ("no form submitted.");
+    }
+    $validator = new Validator();
+    $validator->required('firstName', safeParam($form, 'firstName', "First name is required."));
+    $validator->required('lastName', safeParam($form, 'lastName', "lastName name is required."));
+    
     $form = new Form(array(
       'firstName' => array('required'),
       'lastName' => array('required'),

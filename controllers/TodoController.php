@@ -95,11 +95,11 @@ class TodoController extends Controller {
     $validator = new Validator();
     $validator->required('description', safeParam($formData, 'description', "A description is required."));
     if (!$validator->hasErrors()) {
-      $todo = new TodoModel(array('description' => $form['description'], 'user_id' => $_SESSION['user']['id']));
+      $todo = new TodoModel(array('description' => $formData['description'], 'user_id' => $_SESSION['user']['id']));
       $todo->insert();
       $this->view->flash("Successfully added.");
     } else {
-      foreach ($form->getErrors() as $error) {
+      foreach ($validator->allErrors() as $error) {
         $this->view->flash($error);
       }
     }
