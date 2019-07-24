@@ -118,6 +118,17 @@ class Validator {
     }
     return true;
   }
+  
+  public function same($key, $value1, $value2, $message = false) {
+    if (!$message) {
+      $message = self::fieldToHuman($key) . " must be the same.";
+    }
+    if ($value1 != $value2) {
+      $this -> addError($key, $message);
+      return false;
+    }
+    return true;
+  }
 
   public function password($key, $value, $message = false) {
     if (!$message) {

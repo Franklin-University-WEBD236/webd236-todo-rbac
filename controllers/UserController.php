@@ -101,22 +101,18 @@ class UserController extends Controller {
       die ("no form submitted.");
     }
     $validator = new Validator();
-    $validator->required('firstName', safeParam($form, 'firstName', "First name is required."));
-    $validator->required('lastName', safeParam($form, 'lastName', "lastName name is required."));
-    
-    $form = new Form(array(
-      'firstName' => array('required'),
-      'lastName' => array('required'),
-      'password1' => array('password', array('same', 'password2')),
-      'email1' => array('email', array('same', 'email2')),
-    ));
-    $form->load($_POST['form']);
-    if ($form->validate()) {
+    $validator->required('firstName', safeParam($form, 'firstName'), "First name is required.");
+    $validator->required('lastName', safeParam($form, 'lastName'), "Last name is required.");
+    $validator->password('password1', safeParam($form, 'password1'), "Password must have at least 8 characters, a number, an uppercase, and a symbol");
+    $validator->same('password2', safeParam($form, 'password1'), safeParam($form, 'password2'), "Passwords must match.");
+    $validator->email('email1', safeParam($form, 'email1'), "Invalid email address given.");
+    $validator->same('email2', safeParam($form, 'email1'), safeParam($form, 'email2'), "Email addresses must match.");
+    if (!$validator->hasErrors()) {
       $user = new UserModel(array(
-        'email' => $form['email1'],
+        'email' => trim($form['email1']),
         'password' => password_hash($form['password1'], PASSWORD_DEFAULT),
-        'firstName' => $form['firstName'],
-        'lastName' => $form['lastName'],
+        'firstName' => trim($form['firstName']),
+        'lastName' => trim($form['lastName']),
       ));
       $user->insert();
       restartSession();
@@ -128,8 +124,8 @@ class UserController extends Controller {
         "views/user_register.php",
         array(
           'title' => 'Create an account',
-          'form' => $_POST['form'],
-          'errors' => $form->getErrors(),
+          'form' => $form,
+          'errors' => $validator->allErrors(),
           'action' => $this->view->url('user/register'),
         )
       );
