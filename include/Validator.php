@@ -119,11 +119,11 @@ class Validator {
     return true;
   }
   
-  public function passwordMatch($key, $hash, $plaintext, $message=false) {
+  public function passwordMatch($key, $plaintext, $hash, $message=false) {
     if (!$message) {
       $message = self::fieldToHuman($key) . " is incorrect.";
     }
-    if (!password_verify($hash, $plaintext)) {
+    if (!password_verify($plaintext, $hash)) {
       $this -> addError($key, $message);
       return false;
     }

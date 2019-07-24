@@ -181,28 +181,23 @@ class UserController extends Controller {
     }
     $validator = new Validator();
     $validator->required('currentPassword', safeParam($form, 'currentPassword'), "Current password is required.");
-    $validator->passwordMatch('currentPassword', $user->password, safeParam($form, 'currentPassword'), "Incorrect current password.");
-    $validator->password('newPassword1', safeParam($form, 'newPassword1'), "Password must have at least 8 characters, a number, an uppercase, and a symbol.")
+    $validator->passwordMatch('currentPassword', safeParam($form, 'currentPassword'), $user->password, "Incorrect current password.");
+    $validator->password('newPassword1', safeParam($form, 'newPassword1'), "Password must have at least 8 characters, a number, an uppercase, and a symbol.");
     $validator->same('newPassword2', safeParam($form, 'newPassword1'), safeParam($form, 'newPassword2'), "Passwords must match.");
     if (!$validator->hasErrors()) {
-        $user->password = password_hash($form['newPassword1'], PASSWORD_DEFAULT);
-        $user->update();
-        $this->view->flash("Password updated");
-        $this->view->redirectRelative("");
-      } else {
-        $errors[] = "Invalid current password.";
-      }
+      $user->password = password_hash(safeParam($form, 'newPassword1'), PASSWORD_DEFAULT);
+      $user->update();
+      $_SESSION['user'] = $user;
+      $this->view->flash("Password updated");
+      $this->view->redirectRelative("");
     } else {
-      $errors = $form->getErrors();
-    }
-    if ($errors) {
       $this->view->renderTemplate(
         "views/user_change_password.php",
         array(
           'title' => 'Change your password',
-          'form' => $_POST['form'],
+          'form' => $form,
           'id' => $id,
-          'errors' => $errors,
+          'errors' => $validator->allErrors(),
         )
       );
     }
