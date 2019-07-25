@@ -1,5 +1,8 @@
 <?php
-  
+  function value(&$something, $default = "") {
+    return isset($something) ? $something : $default;
+  }
+
 function safeParam($arr, $index, $default="") {
   if ($arr && isset($arr[$index])) {
     if (is_string($arr[$index])) {
