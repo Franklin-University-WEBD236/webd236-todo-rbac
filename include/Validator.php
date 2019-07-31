@@ -129,6 +129,7 @@ class Validator {
     }
     return true;
   }
+  
   public function same($key, $value1, $value2, $message = false) {
     if (!$message) {
       $message = self::fieldToHuman($key) . " must be the same.";
