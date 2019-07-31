@@ -11,6 +11,9 @@
     <script src="/static/custom.js"></script>
   </head>
   <body>
+<pre><code>
+<?php echo print_r($_SESSION, true); ?>
+</code></pre>
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <a class="navbar-brand" href="#">
           <img src="https://cdn.glitch.com/7635e9c3-2015-4ec8-967a-16ca37cc9e55%2Ftodo.svg" width="30" height="30" class="d-inline-block align-top" alt="">To Do List</a>
