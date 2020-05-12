@@ -88,7 +88,15 @@ CREATE TABLE `usergroups` (
   FOREIGN KEY(groupId) REFERENCES groups(id) ON DELETE CASCADE
 );
 
-INSERT
+-- standard users
+INSERT INTO "usergroups" VALUES(1, 1);
+INSERT INTO "usergroups" VALUES(2, 1);
+INSERT INTO "usergroups" VALUES(3, 1);
+INSERT INTO "usergroups" VALUES(4, 1);
+
+-- admin users
+INSERT INTO "usergroups" VALUES(5, 1);
+INSERT INTO "usergroups" VALUES(5, 2);
 
 CREATE TABLE `grouppermissions` (
   permissionId INTEGER NOT NULL,
@@ -96,6 +104,18 @@ CREATE TABLE `grouppermissions` (
   FOREIGN KEY(permissionId) REFERENCES permissions(id) ON DELETE CASCADE,
   FOREIGN KEY(groupId) REFERENCES groups(id) ON DELETE CASCADE
 );
+
+-- standard user permissions
+INSERT INTO "grouppermissions" VALUES(1, 1);
+INSERT INTO "grouppermissions" VALUES(2, 1);
+INSERT INTO "grouppermissions" VALUES(3, 1);
+INSERT INTO "grouppermissions" VALUES(4, 1);
+
+-- admin permissions
+INSERT INTO "grouppermissions" VALUES(5, 2);
+INSERT INTO "grouppermissions" VALUES(6, 2);
+INSERT INTO "grouppermissions" VALUES(7, 2);
+INSERT INTO "grouppermissions" VALUES(8, 2);
 
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('todo',24);
