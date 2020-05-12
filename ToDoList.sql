@@ -2,6 +2,10 @@ PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
 DROP TABLE IF EXISTS `user`;
 DROP TABLE IF EXISTS `todo`;
+DROP TABLE IF EXISTS `groups`;
+DROP TABLE IF EXISTS `permissions`;
+DROP TABLE IF EXISTS `usergroups`;
+DROP TABLE IF EXISTS `grouppermissions`;
 
 CREATE TABLE `user` (
   -- Note that storing passwords in plaintext like this is very, very bad.
@@ -23,7 +27,7 @@ INSERT INTO "user" VALUES(1,'nobody@nowhere.com','$2y$10$uKHrSOviTMvN9vbGNLsvzOz
 INSERT INTO "user" VALUES(2,'ironborn@pyke.com','$2y$10$eulmGacwa6TjIOPHWC4an.i8o1cgcdBAiMBUyrNXQ7kHeBgJ79tl.','Theon','Greyjoy');
 INSERT INTO "user" VALUES(3,'alwayspayshisdebts@casterlyrock.com','$2y$10$GNup.tzD3/kTYX3SN1g.neHtKQ295arZXGoelfo3Tk5ONyi05BM7m','Tyrion','Lannister');
 INSERT INTO "user" VALUES(4,'todd.whittaker@franklin.edu','$2y$10$roDY2iVzz3gj0HDl1H1FvuE7tedwoE67p.0CMziZi7QsHC5NVL.8G','Todd','Whittaker');
-VALUES(5,'admin@webd236.com','$2y$10$6L4KwSvwx/lQQOxC6Tbzb.kRZRNPqYCWaJY0Lqq1CSBoXmI2aFagy','Admin','User');
+INSERT INTO "user" VALUES(5,'admin@webd236.com','$2y$10$6L4KwSvwx/lQQOxC6Tbzb.kRZRNPqYCWaJY0Lqq1CSBoXmI2aFagy','Admin','User');
 
 
 CREATE TABLE `todo` (
@@ -52,8 +56,29 @@ INSERT INTO "todo" VALUES('Run away to find Danerys Targarian.',1,22,3);
 INSERT INTO "todo" VALUES('Betray my best friend',0,23,3);
 INSERT INTO "todo" VALUES('Suggest a new king.',0,24,3);
 
+CREATE TABLE `groups` (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL
+);
 
+CREATE TABLE `permissions` (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL
+);
 
+CREATE TABLE `usergroups` (
+  userId INTEGER NOT NULL,
+  groupId INTEGER NOT NULL,
+  FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY(groupId) REFERENCES groups(id) ON DELETE CASCADE
+);
+
+CREATE TABLE `grouppermissions` (
+  permissionId INTEGER NOT NULL,
+  groupId INTEGER NOT NULL,
+  FOREIGN KEY(permissionId) REFERENCES permissions(id) ON DELETE CASCADE,
+  FOREIGN KEY(groupId) REFERENCES groups(id) ON DELETE CASCADE
+);
 
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('todo',24);
