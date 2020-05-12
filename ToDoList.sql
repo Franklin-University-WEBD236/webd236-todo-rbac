@@ -51,5 +51,5 @@ INSERT INTO "todo" VALUES('Suggest a new king.',0,24,3);
 
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('todo',24);
-INSERT INTO "sqlite_sequence" VALUES('user',5);
+INSERT INTO "sqlite_sequence" VALUES('user',4);
 COMMIT;
