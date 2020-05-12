@@ -117,7 +117,7 @@ class UserController extends Controller {
     );
   }
 
-  public function get_password($id) {
+  public function get_change_password($id) {
     $this->ensureLoggedIn();
     if ($id != $_SESSION['user']->id) {
       die("Can't change someone elses password.");
@@ -137,7 +137,7 @@ class UserController extends Controller {
     );
   }
 
-  public function post_password($id) {
+  public function post_change_password($id) {
     $this->ensureLoggedIn();
     $user = $this->model::findUserByID($id);
     if ($id != $_SESSION['user']->id) {

@@ -1,1 +1,1 @@
-token|s:64:"31f582ecbbf893d6a16c9df5b36d4be6ac3337e4837e4499dde6edb42afd9b7c";pla3412_1_9_7_1_salt|s:20:"OEfaeWOGPDN2oG055kHt";pla3412_1_9_7_1currentDB|a:5:{s:4:"path";s:14:"./ToDoList.db3";s:4:"name";s:12:"ToDoList.db3";s:8:"writable";b:1;s:12:"writable_dir";b:1;s:8:"readable";b:1;}pla3412_1_9_7_1numRows|i:30;pla3412_1_9_7_1fulltexts|b:0;
+user|O:9:"UserModel":5:{s:2:"id";s:1:"4";s:5:"email";s:27:"todd.whittaker@franklin.edu";s:8:"password";s:60:"$2y$10$4MU2pD64SUOw62KNMISy6.wp77YAuXefjxFzRebLC/w3dziZPiOQK";s:9:"firstName";s:4:"Todd";s:8:"lastName";s:9:"Whittaker";}

@@ -13,7 +13,7 @@
   <body>
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <a class="navbar-brand" href="#">
-          <img src="https://cdn.glitch.com/39f04206-072c-4cf2-8d43-ddaa3d940384%2Frocket.svg?v=1589138182563" width="30" height="30" class="d-inline-block align-top" alt="">&nbsp;<?php echo(htmlspecialchars(CONFIG['applicationName'])); ?></a>
+          <img src="https://cdn.glitch.com/7635e9c3-2015-4ec8-967a-16ca37cc9e55%2Ftodo.svg?v=1559671056411" width="30" height="30" class="d-inline-block align-top" alt="">&nbsp;<?php echo(htmlspecialchars(CONFIG['applicationName'])); ?></a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item active">
             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
@@ -102,11 +102,11 @@
     <form action="/user/login" method="post">
       <div class="form-group">
         <label for="email">Email address</label>
-        <input type="text" min="1" id="email" name="form[email]" class="form-control" placeholder="Enter email address" value="<?php echo(htmlspecialchars(value($form['email']))); ?>" />
+        <input type="text" min="1" id="email" name="form[email]" class="form-control" placeholder="Enter email address" value="<?php echo(htmlspecialchars($this->value($form['email']))); ?>" />
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" min="1" id="password" name="form[password]" class="form-control" placeholder="Enter password" value="<?php echo(htmlspecialchars(value($form['password']))); ?>" />
+        <input type="password" min="1" id="password" name="form[password]" class="form-control" placeholder="Enter password" value="<?php echo(htmlspecialchars($this->value($form['password']))); ?>" />
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Submit</button>
