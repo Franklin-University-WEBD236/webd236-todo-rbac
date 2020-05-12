@@ -1,5 +1,7 @@
 <?php
-include_once 'include/util.php';
+require_once 'include/config.php';
+require_once 'include/util.php';
+
 
 function routeUrl() {
   $method = $_SERVER['REQUEST_METHOD'];
@@ -11,7 +13,6 @@ function routeUrl() {
       unset($requestURI[$i]);
     }
   }
-  # continued...
 
   $entity = array_values($requestURI);
   $className = ucfirst($entity[0]) . 'Controller';
@@ -19,20 +20,18 @@ function routeUrl() {
   $func = strtolower($method) . '_' . (isset($entity[1]) ? $entity[1] : 'index');
   $params = array_slice($entity, 2);
 
-  error_log("Looking for controller ${controller}", 0);
-
   if (!file_exists($controller)) {
-    die("Controller '$controller' doesn't exist.");
+    new ErrorController(404, "Controller <code>$controller</code> doesn't exist. Do you want to <a href='/framework/createController/${className}'>create it</a>?");
   }
 
-  // require $controller; // no longer needed due to auto loader
   $object = new $className();
   
   if (!method_exists($object, $func)) {
-    die("Method '$func' doesn't exist in controller '$className'.");
+    new ErrorController(404, "Method <code>$func()</code> doesn't exist in controller <code>$controller</code>. Do you want to <a href='/framework/createFunction/$className/$func'>create it</a>?");
   }
 
   call_user_func_array(array($object, $func), $params);
+  new ErrorController(404, "It looks like you're not redirecting or rendering a template in <code>$func()</code> in the <code>$controller</code> controller. Maybe edit that function?");
   exit();
 }
 

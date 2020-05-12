@@ -1,7 +1,5 @@
-# WEBD 236 To Do app with object orientation
+# WEBD 236 To Do app with RBAC
 
 Goals are:
-  - migrate to objects for Model, View, and Controller
-  - create an auto-loader to avoid imports
-  - use the Validator class effectively
-  - move to hashed passwords
+  - Add role based authentication
+  - Add administrative console
