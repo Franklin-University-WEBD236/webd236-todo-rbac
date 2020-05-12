@@ -78,9 +78,9 @@ class UserController extends Controller {
         'firstName' => trim($form['firstName']),
         'lastName' => trim($form['lastName']),
       ));
-      $user->insert();
+      $user->id = $user->insert();
       restartSession();
-      $_SESSION['user'] = $user;
+      login($user);
       $this->view->flash("Welcome to To Do List, {$user['firstName']}.");
       $this->view->redirectRelative("");
     } else {
