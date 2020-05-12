@@ -13,7 +13,7 @@
   <body>
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <a class="navbar-brand" href="#">
-          <img src="https://cdn.glitch.com/39f04206-072c-4cf2-8d43-ddaa3d940384%2Frocket.svg?v=1589138182563" width="30" height="30" class="d-inline-block align-top" alt="">&nbsp;<?php echo(htmlspecialchars(CONFIG['applicationName'])); ?></a>
+          <img src="https://cdn.glitch.com/7635e9c3-2015-4ec8-967a-16ca37cc9e55%2Ftodo.svg?v=1559671056411" width="30" height="30" class="d-inline-block align-top" alt="">&nbsp;<?php echo(htmlspecialchars(CONFIG['applicationName'])); ?></a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item active">
             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
@@ -104,11 +104,11 @@
         <div class="row">
           <div class="col">
             <label for="firstName">First name</label>
-            <input type="text" min="1" id="firstName" name="form[firstName]" class="form-control" placeholder="Enter first name" value="<?php echo(htmlspecialchars(value($form['firstName']))); ?>" />
+            <input type="text" min="1" id="firstName" name="form[firstName]" class="form-control" placeholder="Enter first name" value="<?php echo(htmlspecialchars($this->value($form['firstName']))); ?>" />
           </div>
           <div class="col">
             <label for="lastName">Last name</label>
-            <input type="text" min="1" id="lastName" name="form[lastName]" class="form-control" placeholder="Enter last name" value="<?php echo(htmlspecialchars(value($form['lastName']))); ?>" />
+            <input type="text" min="1" id="lastName" name="form[lastName]" class="form-control" placeholder="Enter last name" value="<?php echo(htmlspecialchars($this->value($form['lastName']))); ?>" />
           </div>
         </div>
       </div>
@@ -116,11 +116,11 @@
         <div class="row">
           <div class="col">
             <label for="email">Email address</label>
-            <input type="text" min="1" id="email1" name="form[email1]" class="form-control" placeholder="Enter email address" value="<?php echo(htmlspecialchars(value($form['email1']))); ?>" />
+            <input type="text" min="1" id="email1" name="form[email1]" class="form-control" placeholder="Enter email address" value="<?php echo(htmlspecialchars($this->value($form['email1']))); ?>" />
           </div>
           <div class="col">
             <label for="email">Verify email address</label>
-            <input type="text" min="1" id="email2" name="form[email2]" class="form-control" placeholder="Re-enter email address" value="<?php echo(htmlspecialchars(value($form['email2']))); ?>" />
+            <input type="text" min="1" id="email2" name="form[email2]" class="form-control" placeholder="Re-enter email address" value="<?php echo(htmlspecialchars($this->value($form['email2']))); ?>" />
           </div>
         </div>
       </div>
@@ -128,11 +128,11 @@
         <div class="row">
           <div class="col">
             <label for="password">Password</label>
-            <input type="password" min="1" id="password1" name="form[password1]" class="form-control" placeholder="Enter password" value="<?php echo(htmlspecialchars(value($form['password1']))); ?>" />
+            <input type="password" min="1" id="password1" name="form[password1]" class="form-control" placeholder="Enter password" value="<?php echo(htmlspecialchars($this->value($form['password1']))); ?>" />
           </div>
           <div class="col">
             <label for="password">Verify password</label>
-            <input type="password" min="1" id="password2" name="form[password2]" class="form-control" placeholder="Re-enter password" value="<?php echo(htmlspecialchars(value($form['password2']))); ?>" />
+            <input type="password" min="1" id="password2" name="form[password2]" class="form-control" placeholder="Re-enter password" value="<?php echo(htmlspecialchars($this->value($form['password2']))); ?>" />
           </div>
         </div>
       </div>
