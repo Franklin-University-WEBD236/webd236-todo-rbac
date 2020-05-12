@@ -56,15 +56,30 @@ INSERT INTO "todo" VALUES('Run away to find Danerys Targarian.',1,22,3);
 INSERT INTO "todo" VALUES('Betray my best friend',0,23,3);
 INSERT INTO "todo" VALUES('Suggest a new king.',0,24,3);
 
+------------------------------------------------------------------------
+-- Role based access control tables
+------------------------------------------------------------------------
 CREATE TABLE `groups` (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL
 );
 
+INSERT INTO "groups" VALUES(1, "Users");
+INSERT INTO "groups" VALUES(2, "Administrators");
+
 CREATE TABLE `permissions` (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL
 );
+
+INSERT INTO "permissions" VALUES(1, "create_todo");
+INSERT INTO "permissions" VALUES(2, "edit_todo");
+INSERT INTO "permissions" VALUES(3, "delete_todo");
+INSERT INTO "permissions" VALUES(4, "view_todo");
+INSERT INTO "permissions" VALUES(5, "admin_page");
+INSERT INTO "permissions" VALUES(6, "edit_user");
+INSERT INTO "permissions" VALUES(7, "delete_user");
+INSERT INTO "permissions" VALUES(8, "view_user");
 
 CREATE TABLE `usergroups` (
   userId INTEGER NOT NULL,
@@ -72,6 +87,8 @@ CREATE TABLE `usergroups` (
   FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY(groupId) REFERENCES groups(id) ON DELETE CASCADE
 );
+
+INSERT
 
 CREATE TABLE `grouppermissions` (
   permissionId INTEGER NOT NULL,
@@ -83,4 +100,6 @@ CREATE TABLE `grouppermissions` (
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('todo',24);
 INSERT INTO "sqlite_sequence" VALUES('user',5);
+INSERT INTO "sqlite_sequence" VALUES('groups',2);
+INSERT INTO "sqlite_sequence" VALUES('permissions',8);
 COMMIT;
