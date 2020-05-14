@@ -15,7 +15,7 @@ class UserModel extends Model {
     }
   }
   
-  private static function makeUserFromRow($row) {
+  private static function fromRow($row) {
     $user = null;
     if ($row) {
       $user = new UserModel($row);
@@ -23,18 +23,32 @@ class UserModel extends Model {
     return $user;
   }
 
+  private static function fromRows($rows) {
+    $result = array();
+    foreach ($rows as $row) {
+      $result[] = self::fromRow($row);
+    }
+    return $result;
+  }
+  
+  public static function findAll() {
+    $st = self::$db -> prepare('SELECT * FROM user order by lastName');
+    $st -> execute();
+    return self::fromRows($st -> fetchAll(PDO::FETCH_ASSOC));
+  }
+
   public static function findUserById($id) {
     $st = self::$db -> prepare('SELECT * FROM user WHERE id = ?');
     $st -> bindParam(1, $id);
     $st -> execute();
-    return self::makeUserFromRow($st -> fetch(PDO::FETCH_ASSOC));
+    return self::fromRow($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public static function findByEmail($email) {
     $st = self::$db -> prepare('SELECT * FROM user WHERE email = :email');
     $st -> bindParam(':email', $email);
     $st -> execute();
-    return self::makeUserFromRow($st -> fetch(PDO::FETCH_ASSOC));
+    return self::fromRow($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public function insert() {

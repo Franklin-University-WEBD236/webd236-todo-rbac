@@ -13,11 +13,12 @@ class AdminController extends Controller {
     // 1. Load and validate parameters or form contents
     // 2. Query or update the database
     // 3. Render a template or redirect
-    
+    $users = UserModel::findAll();
     $this->view->renderTemplate(
       "views/AdminIndex.php",
       array(
-        'title' => 'AdminIndex',
+        'title' => 'Administrative interface',
+        'users' => $users,
       )
     );
   }
