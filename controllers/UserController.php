@@ -101,7 +101,7 @@ class UserController extends Controller {
     if ($id != $_SESSION['user']->id && !Authenticator::instance() -> can("edit_user")) {
       die ("Can't edit someone elses profile.");
     }
-    $user = $this->model::findUserById($id);
+    $user = $this->model::findById($id);
     $this->view->renderTemplate(
       "views/user_edit.php",
       array(
@@ -122,7 +122,7 @@ class UserController extends Controller {
     if ($id != $_SESSION['user']->id) {
       die("Can't change someone elses password.");
     }
-    $user = $this->model::findUserByID($id);
+    $user = $this->model::findById($id);
     $this->view->renderTemplate(
       "views/user_change_password.php",
       array(
@@ -139,7 +139,7 @@ class UserController extends Controller {
 
   public function post_change_password($id) {
     $this->ensureLoggedIn();
-    $user = $this->model::findUserByID($id);
+    $user = $this->model::findById($id);
     if ($id != $_SESSION['user']->id) {
       die("Can't change someone elses password.");
     }
@@ -173,8 +173,8 @@ class UserController extends Controller {
 
   public function post_edit($id) {
     $this->ensureLoggedIn();
-    $user=$_SESSION['user'];
-    if ($id != $user['id']) {
+    $user=$this->model::findById($id);
+    if ($id != $_SESSION['user']->id && !Authenticator::instance() -> can("edit_user")) {
       die("Can't edit somebody else.");
     }
     $form = safeParam($_POST, 'form');
@@ -192,8 +192,7 @@ class UserController extends Controller {
       $user->lastName = $form['lastName'];
       $user->update();
       $this->view->flash("Profile updated");
-      $_SESSION['user'] = $user;
-      $this->view->redirectRelative("");
+      $this->view->redirectRelative("index");
     } else {
       $this->view->renderTemplate(
         "views/user_edit.php",

@@ -41,7 +41,7 @@ class UserModel extends Model {
     return self::fromRows($st -> fetchAll(PDO::FETCH_ASSOC));
   }
 
-  public static function findUserById($id) {
+  public static function findById($id) {
     $st = self::$db -> prepare('SELECT * FROM user WHERE id = ?');
     $st -> bindParam(1, $id);
     $st -> execute();
