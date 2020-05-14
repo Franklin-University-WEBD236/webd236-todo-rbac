@@ -44,8 +44,9 @@ class Logger {
     if (!is_string($message)) {
       $message = print_r($message, true);
     }
-    foreach(preg_split("/((\r?\n)|(\r\n?))/", $message) as $line) {      fprintf($fd, "%s %s %s\r\n", $timestamp, $names[$level], $line);
-    } 
-    fclose($fd);
-  }
+    foreach(preg_split("/((\r?\n)|(\r\n?))/", $message) as $line) {
+      fprintf($fd, "%s %s %s\r\n", $timestamp, $names[$level], $line);
+    }
+    fclose($fd);
+  }
 }
