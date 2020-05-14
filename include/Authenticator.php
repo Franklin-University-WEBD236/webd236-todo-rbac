@@ -34,7 +34,10 @@ class Authenticator {
     if (gettype($userId) == 'object') {
       return $userId -> getId();
     }
-    return currentUser();
+    if (isLoggedIn()) {
+      return $_SESSION['user'] -> id;
+    }
+    return null;
   }
 
   public function can($permissionKey, $userId = false) {
