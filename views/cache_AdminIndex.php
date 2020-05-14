@@ -44,7 +44,7 @@
               <a class="dropdown-item" href="/user/edit/<?php echo(htmlspecialchars($_SESSION['user']->id)); ?>">Edit profile</a>
               <a class="dropdown-item" href="/user/change_password/<?php echo(htmlspecialchars($_SESSION['user']->id)); ?>">Change password</a>
 <?php  if (Authenticator::instance()->can('admin_page')) : ?>
-              <a class="dropdown-item" href="/admin">Admin</a>
+              <a class="dropdown-item" href="/admin">Admin pages</a>
 <?php  endif; ?>
 
               <a class="dropdown-item" href="/user/logout">Logout</a>
