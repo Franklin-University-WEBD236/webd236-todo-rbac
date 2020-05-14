@@ -34,7 +34,7 @@ class PermissionModel extends Model {
   public static function fromRows($rows) {
     $result = array();
     foreach ($rows as $row) {
-      $result[] = new Permission($row);
+      $result[] = new PermissionModel($row);
     }
     return $result;
   }
@@ -49,14 +49,14 @@ class PermissionModel extends Model {
     $st = self::$db -> prepare("SELECT * FROM permissions WHERE id = :id");
     $st -> bindParam(':id', $id);
     $st -> execute();
-    return new Permission($st -> fetch(PDO::FETCH_ASSOC));
+    return new PermissionModel($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public static function findByName($name) {
     $st = self::$db -> prepare("SELECT * FROM permissions WHERE name = :name");
     $st -> bindParam(':name', $name);
     $st -> execute();
-    return new Permission($st -> fetch(PDO::FETCH_ASSOC));
+    return new PermissionModel($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public function insert() {

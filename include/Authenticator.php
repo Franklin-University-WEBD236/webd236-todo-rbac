@@ -8,10 +8,10 @@ class Authenticator {
   const PERMS_QUERY =
     "SELECT DISTINCT permissions.id as id, permissions.name as name
      FROM
-        users, usergroups, groups, grouppermissions, permissions
+        user, usergroups, groups, grouppermissions, permissions
      WHERE
-        users.id = :userId AND
-        users.id = usergroups.userId AND
+        user.id = :userId AND
+        user.id = usergroups.userId AND
         usergroups.groupId = groups.id AND
         groups.id = grouppermissions.groupId AND
         grouppermissions.permissionId = permissions.id";
@@ -57,7 +57,7 @@ class Authenticator {
       $st = $db -> prepare(self::PERMS_QUERY);
       $st -> bindParam(':userId', $userId);
       $st -> execute();
-      $this -> cache[$userId] = Permission::fromRows($st -> fetchAll(PDO::FETCH_ASSOC));
+      $this -> cache[$userId] = PermissionModel::fromRows($st -> fetchAll(PDO::FETCH_ASSOC));
     }
     return $this -> cache[$userId];
   }
