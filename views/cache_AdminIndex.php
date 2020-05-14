@@ -102,13 +102,31 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <h1><?php echo(htmlspecialchars($title)); ?></h1>
-<?php  debug($users); ?>
-    <ul>
-<?php  foreach ($users as $user): ?>
-      <li><?php echo(htmlspecialchars($user -> firstName)); ?></li>
+    <h2>Users</h2>
+    <table class="table table-striped" frame="box">
+      <thead class="thead-dark">
+        <tr>
+          <th>User name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+<?php  foreach ($users as $user) : ?>
+        <tr>
+          <td class="align-middle"><?php echo "{$user -> getFullName()}" ?></td>
+          <td>
+            <div class="btn-toolbar align-middle float-right">
+              <button class="btn btn-success d-flex justify-content-center align-content-between mr-1" onclick="post('/todo/done/<?php echo(htmlspecialchars($todo['id'])); ?>')"><span class="material-icons">done</span></button>
+              <button class="btn btn-primary d-flex justify-content-center align-content-between mr-1" onclick="get('/todo/edit/<?php echo(htmlspecialchars($todo['id'])); ?>')"><span class="material-icons">create</span></button>
+              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('/todo/delete/<?php echo(htmlspecialchars($todo['id'])); ?>')"><span class="material-icons">delete</span></button>
+            </div>
+          </td>
+        </tr>
 <?php  endforeach; ?>
-    </ul>
+      </tbody>
+    </table>
+  
+  
   </div>
 </div>
           

@@ -31,6 +31,10 @@ class UserModel extends Model {
     return $result;
   }
   
+  public function getFullName() {
+    return $this->lastName . " " . $this->firstName;
+  }
+  
   public static function findAll() {
     $st = self::$db -> prepare('SELECT * FROM user order by lastName');
     $st -> execute();

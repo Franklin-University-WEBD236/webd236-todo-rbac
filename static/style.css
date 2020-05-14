@@ -22,3 +22,10 @@ footer {
   width: 50%;
   opacity: 0;
 }
+.debug {
+  background-color: yellow;
+  display: block;
+  clear: both;
+  white-space: pre;
+  font-family: monospace;
+}
