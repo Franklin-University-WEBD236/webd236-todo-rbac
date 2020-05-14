@@ -32,7 +32,7 @@ class UserModel extends Model {
   }
   
   public function getFullName() {
-    return $this->lastName . " " . $this->firstName;
+    return $this->lastName . ", " . $this->firstName;
   }
   
   public static function findAll() {
