@@ -98,7 +98,7 @@ class UserController extends Controller {
 
   public function get_edit($id) {
     $this->ensureLoggedIn();
-    if ($id != $_SESSION['user']->id) {
+    if ($id != $_SESSION['user']->id && !Authenticator::instance() -> can("edit_user")) {
       die ("Can't edit someone elses profile.");
     }
     $user = $this->model::findUserById($id);
