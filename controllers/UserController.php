@@ -215,6 +215,18 @@ class UserController extends Controller {
     $this->view->flash("User {$user->getFullName()} deleted");
     $this->view->redirectRelative("index");
   }
+
+  public function get_edit_groups() {
+    if (!Authenticator::instance() -> can("edit_user")) {
+      die("Cannot edit user group membership");
+    }
+    $this->view->renderTemplate(
+      "views/UserEdit_groups.php",
+      array(
+        'title' => 'UserEdit_groups',
+      )
+    );
+  }
 }
 
 ?>
