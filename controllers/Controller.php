@@ -4,6 +4,8 @@ class Controller {
   protected $view;
   
   public function __construct() {
+    $this->logger = Logger::instance();
+    $this->auth = Authenticator::instance();
     $this->view = new View();
   }
   
