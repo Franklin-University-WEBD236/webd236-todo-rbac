@@ -64,17 +64,13 @@ class UserModel extends Model {
     $st -> execute();
     return $this->id = self::$db->lastInsertId();
   }
-/*  
-  public static function addUser($email, $password, $firstName="", $lastName="") {
-    $st = self::$db -> prepare("INSERT INTO user (email, password, firstName, lastName) values (:email, :password, :firstName, :lastName)");
-    $st -> bindParam(':email', $email);
-    $st -> bindParam(':password', $password);
-    $st -> bindParam(':firstName', $firstName);
-    $st -> bindParam(':lastName', $lastName);
-    $st -> execute();
-    return self::$db->lastInsertId();
+  
+  public function delete() {
+    $statement = self::$db -> prepare("DELETE FROM user WHERE id = :id");
+    $statement -> bindParam(':id', $this->id);
+    $statement -> execute();
   }
-*/
+
   public function update() {
     $st = self::$db -> prepare("UPDATE user SET email = :email, password = :password, firstName = :firstName, lastName = :lastName WHERE id = :id");
     $st -> bindParam(':email', $this->email);

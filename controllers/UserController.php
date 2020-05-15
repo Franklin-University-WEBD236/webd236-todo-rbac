@@ -205,5 +205,16 @@ class UserController extends Controller {
       );
     }
   }
+
+  public function post_delete($id) {
+    if ($id != $_SESSION['user']->id && !Authenticator::instance() -> can("delete_user")) {
+      die ("Can't edit someone elses profile.");
+    }
+    $user = UserModel::findById($id);
+    $user->delete();
+    $this->view->flash("User {$user->getFullName()} deleted");
+    $this->view->redirectRelative("index");
+  }
 }
+
 ?>
