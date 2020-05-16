@@ -3,8 +3,8 @@ class AdminController extends Controller {
 
   public function __construct() {
     parent::__construct();
-    // Need a model? Uncomment below:
-    // $this->model = 'AdminModel';
+    // this protects the entire controller
+    $this -> auth -> ensure('admin_page');
   }
 
   public function get_index() {

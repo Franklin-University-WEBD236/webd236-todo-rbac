@@ -16,9 +16,9 @@
           <td class="align-middle"><?php echo "{$user -> getFullName()}" ?></td>
           <td>
             <div class="btn-toolbar align-middle float-right">
-              <button class="btn btn-success d-flex justify-content-center align-content-between mr-1" onclick="get('@@user/edit_groups/{{$user -> id}}@@')"><span class="material-icons">group</span></button>
-              <button class="btn btn-primary d-flex justify-content-center align-content-between mr-1" onclick="get('@@user/edit/{{$user -> id}}@@')"><span class="material-icons">create</span></button>
-              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@user/delete/{{$user -> id}}@@')"><span class="material-icons">delete</span></button>
+              <button class="btn btn-success d-flex justify-content-center align-content-between mr-1" onclick="get('@@admin/edit_groups/{{$user -> id}}@@')"><span class="material-icons">group</span></button>
+              <button class="btn btn-primary d-flex justify-content-center align-content-between mr-1" onclick="get('@@admin/edit_user/{{$user -> id}}@@')"><span class="material-icons">create</span></button>
+              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@admin/delete_user/{{$user -> id}}@@')"><span class="material-icons">delete</span></button>
             </div>
           </td>
         </tr>
