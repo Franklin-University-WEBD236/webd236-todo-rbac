@@ -39,6 +39,29 @@ class AdminController extends Controller {
   public function post_edit_user($id) {
     $this -> auth -> ensure('edit_user');
     $user = UserModel::findById($id);
+    $form = safeParam($_POST, 'form');
+    $this->validator->email('email1', safeParam($form, 'email1'), "Invalid email address given.");
+    $this->validator->same('email2', safeParam($form, 'email1'), safeParam($form, 'email2'), "Email addresses must match.");
+    if ($this->validator->hasErrors()) {
+      $this->view->renderTemplate(
+        "views/AdminEditUser.php",
+        array(
+          'title' => 'Edit user',
+          'user' => $user,
+          'form' => array(
+            'firstName' => $form['firstName'],
+            'lastName'  => $form['lastName'],
+            'email1'    => $form['email1'],
+            'email2'    => $form['email2'],
+          )
+        )
+      );
+    }
+    $user->firstName=$form['firstName'];
+    $user->lastName=$form['lastName'];
+    $user->email=$form['email'];
+    $user->update();
+    exit()l
     $this->view->flash("User updated");
     $this->view->redirectRelative("admin");
   }
