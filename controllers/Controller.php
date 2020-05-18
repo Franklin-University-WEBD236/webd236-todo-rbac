@@ -7,6 +7,7 @@ class Controller {
     $this->logger = Logger::instance();
     $this->auth = Authenticator::instance();
     $this->view = new View();
+    $this->validator = new Validator();
   }
   
   public function ensureLoggedIn() {
