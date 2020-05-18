@@ -36,16 +36,25 @@ class AdminController extends Controller {
     );
   }
 
-  public function post_edit_user() {
-    // Put your code for post_edit_user here, something like
-    // 1. Load and validate parameters or form contents
-    // 2. Query or update the database
-    // 3. Render a template or redirect
-    $this->view->renderTemplate(
-      "views/AdminEdit_user.php",
-      array(
-        'title' => 'AdminEdit_user',
-      )
-    );
+  public function post_edit_user($id) {
+    $this -> auth -> ensure('edit_user');
+    $user = UserModel::findById($id);
+    $this->view->flash("User updated");
+    $this->view->redirectRelative("admin");
+  }
+
+  public function post_edit_password($id) {
+    $this -> auth -> ensure('edit_user');
+    $user = UserModel::findById($id);
+    $this->view->flash("User password updated");
+    $this->view->redirectRelative("admin");
+  }
+
+  public function post_delete_user($id) {
+    $this -> auth -> ensure('delete_user');
+    $user = UserModel::findById($id);
+    $user->delete();
+    $this->view->flash("User deleted");
+    $this->view->redirectRelative("admin");
   }
 }

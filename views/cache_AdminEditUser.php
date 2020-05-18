@@ -103,6 +103,7 @@
 <div class="row">
   <div class="col-lg-12">
 
+    <h2>User details</h2>
     <form action="/admin/edit_user/<?php echo(htmlspecialchars($user->id)); ?>" method="post">
       <div class="form-group">
         <div class="row">
@@ -136,7 +137,8 @@
     
     <hr/>
     
-    <form action="/user/change_password/<?php echo(htmlspecialchars($id)); ?>" method="post">
+    <h2>Change password</h2>
+    <form action="/admin/edit_password/<?php echo(htmlspecialchars($user->id)); ?>" method="post">
       <div class="form-group">
         <div class="row mt-4">
           <div class="col">

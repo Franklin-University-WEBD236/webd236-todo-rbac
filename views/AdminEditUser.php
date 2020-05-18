@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-lg-12">
 
-    <h2></h2>
+    <h2>User details</h2>
     <form action="@@admin/edit_user/{{$user->id}}@@" method="post">
       <div class="form-group">
         <div class="row">
@@ -37,7 +37,8 @@
     
     <hr/>
     
-    <form action="@@user/change_password/{{$id}}@@" method="post">
+    <h2>Change password</h2>
+    <form action="@@admin/edit_password/{{$user->id}}@@" method="post">
       <div class="form-group">
         <div class="row mt-4">
           <div class="col">
