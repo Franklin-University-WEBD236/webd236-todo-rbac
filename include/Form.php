@@ -21,16 +21,17 @@ class Form {
   }
   
   public function toHtml() {
-    $result = "<form action=\"{$this->action}\" method=\"{$this->method}\">\n";
+    $result = "\n<form action=\"{$this->action}\" method=\"{$this->method}\">\n";
     foreach ($this->fields as $name => $params) {
       $temp = "";
       switch ($params['type']) {
-        case "text" : $temp = $this->_text($name, $params['label'], $params['options']); break;
-        case "password" : break;
+        case "text" : $temp = $this->_input($name, "text", $params['label'], $params['options']); break;
+        case "password" : $temp = $this->_input($name, "password", $params['label'], $params['options']); break;
+        case "button" : $temp = $this->_button(); break;
       }
       $result .= $temp;
     }
-    return $result . "\n</form>\n";
+    return $result . "</form>\n";
 //      <div class="form-group">
 //        <label for="email">Email address</label>
 //        <input type="text" min="1" id="email" name="form[email]" class="form-control"
@@ -38,22 +39,27 @@ class Form {
 //      </div>
   }
   
-  private function _text($name, $label, $options) {
+  private function _input($name, $type, $label, $options) {
     $opts = [
       "class" => "form-control",
       "placeholder" => "Enter $label",
     ];
     $opts = array_merge($opts, $options);
-    $opts = $this->_build($opts);
+    $opts = $this->_buildOptions($opts);
     return <<<END
-<div class="form-group">
-  <label for="$name">$label</label>
-  <input type="text" id="$name" name="form[$name]" $opts />
-</div>
+  <div class="form-group">
+    <label for="$name">$label</label>
+    <input type="$type" id="$name" name="form[$name]" $opts />
+  </div>
+
 END;
   }
   
-  private function _build($options) {
+  private function _button($name, $label, $options) {
+    
+  }
+  
+  private function _buildOptions($options) {
     $result = [];
     foreach ($options as $key => $value) {
       $result[] = "$key=\"$value\"";

@@ -8,7 +8,7 @@ class FormtestController extends Controller {
   }
 
   public function get_index() {
-    $form = new Form(); //$name, $type, $label, $valid="", $options=[]
+    $form = new Form($this->view->url("formtest")); //$name, $type, $label, $valid="", $options=[]
     $form->field("firstName", "text", "First Name", "notempty", ["min" => "1"]);
     $form->field("lastName", "text", "Last Name", "notempty", ["min" => "1"]);
     $form->field("password", "password", "Password", "notempty", ["min" => "1"]);
