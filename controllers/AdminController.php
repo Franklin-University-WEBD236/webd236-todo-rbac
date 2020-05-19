@@ -48,6 +48,7 @@ class AdminController extends Controller {
         array(
           'title' => 'Edit user',
           'user' => $user,
+          'errors' => $this->validator->allErrors(),
           'form' => array(
             'firstName' => $form['firstName'],
             'lastName'  => $form['lastName'],
@@ -59,9 +60,8 @@ class AdminController extends Controller {
     }
     $user->firstName=$form['firstName'];
     $user->lastName=$form['lastName'];
-    $user->email=$form['email'];
+    $user->email=$form['email1'];
     $user->update();
-    exit()l
     $this->view->flash("User updated");
     $this->view->redirectRelative("admin");
   }
