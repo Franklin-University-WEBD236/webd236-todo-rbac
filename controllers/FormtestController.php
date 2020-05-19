@@ -18,7 +18,7 @@ class FormtestController extends Controller {
       "views/FormtestIndex.php",
       array(
         'title' => 'FormtestIndex',
-        'form' => $form,
+        'form' => $form -> toHtml(),
       )
     );
   }

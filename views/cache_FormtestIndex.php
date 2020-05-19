@@ -104,6 +104,10 @@
   <div class="col-lg-12">
     <h1><?php echo(htmlspecialchars($title)); ?></h1>
     <p>Replace this with your view contents</p>
+    <?php echo($form); ?>
+    <pre>
+    <?php echo(htmlspecialchars($form)); ?>
+    </pre>
   </div>
 </div>
           
