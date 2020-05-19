@@ -11,10 +11,16 @@ class Form {
     $this -> method = $method;
   }
   
-  public function div($options=[]) {
+  public function start_div($options=[]) {
     $this->fields[] = [
       "type" => "div",
       "options" => $options,
+    ];
+  }
+
+  public function end_div() {
+    $this->fields[] = [
+      "type" => "/div",
     ];
   }
   
@@ -35,7 +41,8 @@ class Form {
       switch ($params['type']) {
         case "text" : $temp = $this->_input($name, "text", $params['label'], $params['options']); break;
         case "password" : $temp = $this->_input($name, "password", $params['label'], $params['options']); break;
-        case "div" : $temp = $this->_div($params['options']);
+        case "div" : $temp = $this->_div($params['options']); break;
+        case "/div" : $temp = "</div>\n"; break;
         case "button" : $temp = $this->_button(); break;
       }
       $result .= $temp;
@@ -65,8 +72,11 @@ END;
   }
   
   private function _div($options) {
-    $opts = buildOptions($options);
-    return "<div $opts>";
+    $opts = $this->_buildOptions($options);
+    if ($opts) {
+      return "<div $opts>\n";
+    }
+    return "<div>\n";
   }
   
   private function _button($name, $label, $options) {
