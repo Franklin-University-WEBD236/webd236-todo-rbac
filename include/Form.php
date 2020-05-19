@@ -11,6 +11,13 @@ class Form {
     $this -> method = $method;
   }
   
+  public function div($options=[]) {
+    $this->fields[] = [
+      "type" => "div",
+      "options" => $options,
+    ];
+  }
+  
   public function field($name, $type, $label, $valid="", $options=[]) {
     $this->fields[$name] = [
       "type" => $type,
@@ -18,6 +25,7 @@ class Form {
       "valid" => $valid,
       "options" => $options,
     ];
+    return $this;
   }
   
   public function toHtml() {
@@ -27,6 +35,7 @@ class Form {
       switch ($params['type']) {
         case "text" : $temp = $this->_input($name, "text", $params['label'], $params['options']); break;
         case "password" : $temp = $this->_input($name, "password", $params['label'], $params['options']); break;
+        case "div" : $temp = $this->_div($params['options']);
         case "button" : $temp = $this->_button(); break;
       }
       $result .= $temp;
