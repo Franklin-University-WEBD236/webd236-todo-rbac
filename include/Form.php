@@ -4,11 +4,13 @@ class Form {
   private $fields;
   private $action;
   private $method;
+  private $indent;
   
   public function __construct($action="", $method="POST") {
     $this -> fields = [];
     $this -> action = $action;
     $this -> method = $method;
+    $this -> indent = "  ";
   }
   
   public function start_div($options=[]) {
@@ -45,7 +47,7 @@ class Form {
         case "/div" : $temp = "</div>\n"; break;
         case "button" : $temp = $this->_button(); break;
       }
-      $result .= $temp;
+      $result .= $this->indent . $temp;
     }
     return $result . "</form>\n";
 //      <div class="form-group">
@@ -63,11 +65,8 @@ class Form {
     $opts = array_merge($opts, $options);
     $opts = $this->_buildOptions($opts);
     return <<<END
-  <div class="form-group">
-    <label for="$name">$label</label>
-    <input type="$type" id="$name" name="form[$name]" $opts />
-  </div>
-
+<label for="$name">$label</label>
+<input type="$type" id="$name" name="form[$name]" $opts />
 END;
   }
   
