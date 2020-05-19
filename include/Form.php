@@ -14,7 +14,7 @@ class Form {
       "label" => $label,
       "valid" => $valid,
       "options" => $options,
-    ]
+    ];
   }
   
   public function toHtml() {
@@ -45,8 +45,14 @@ class Form {
       <label for="$name">$label</label>
       <input type="text" min="1" id="$name" name="form[$name]" class="form-control" placeholder="$label" />
     </div>
-    END;
+END;
   }
   
-  private function _build()
+  private function _build($options) {
+    $result = [];
+    foreach ($opts as $key => $value) {
+      $result[] = "$key='$value'";
+    }
+    return implode($result, " ");
+  }
 }
