@@ -25,7 +25,7 @@ class Form {
     foreach ($this->fields as $name => $params) {
       $temp = "";
       switch ($params['type']) {
-        case "text" : $temp = $this->_text($name, $params['type'], $params['options']); break;
+        case "text" : $temp = $this->_text($name, $params['label'], $params['options']); break;
         case "password" : break;
       }
       $result .= $temp;
