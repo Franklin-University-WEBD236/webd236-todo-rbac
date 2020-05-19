@@ -64,6 +64,11 @@ class Form {
 END;
   }
   
+  private function _div($options) {
+    $opts = buildOptions($options);
+    return "<div $opts>";
+  }
+  
   private function _button($name, $label, $options) {
     
   }
