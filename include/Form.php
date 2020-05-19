@@ -2,10 +2,13 @@
 class Form {
   
   private $fields;
+  private $action;
+  private $method;
   
-  public function __construct() {
+  public function __construct($action="", $method="POST") {
     $this -> fields = [];
-    
+    $this -> action = $action;
+    $this -> method = $method;
   }
   
   public function field($name, $type, $label, $valid="", $options=[]) {
@@ -18,15 +21,16 @@ class Form {
   }
   
   public function toHtml() {
-    $result = "";
-    $temp = "";
+    $result = "<form action=\"{$this->action}\" method=\"{$this->method}\">\n";
     foreach ($this->fields as $name => $params) {
+      $temp = "";
       switch ($params['type']) {
-        case "text" : $temp = $this->_text($name, $params['label'], $params['options']); break;
+        case "text" : $temp = $this->_text($name, $params['type'], $params['options']); break;
+        case "password" : break;
       }
       $result .= $temp;
     }
-    return $result;
+    return $result . "\n</form>\n";
 //      <div class="form-group">
 //        <label for="email">Email address</label>
 //        <input type="text" min="1" id="email" name="form[email]" class="form-control"
