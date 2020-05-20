@@ -19,11 +19,12 @@ class FormValidator {
   
   public function get_errors($form) {
     foreach ($this->rules as $rule) {
+      $extra_params = [];
       // get field, func, and message
       extract($rule);
       if (preg_match('/^([a-zA-Z_][a-zA-Z0-9_]*)\[(.*)\]$/m', $func, $matches)) {
         $func = $matches[1];
-        
+        $extra_params = explode(",", $matches[2]);
       }
       if (!method_exists($this->validator, $func)) {
         die("Unknown form validation rule $func.");
@@ -31,7 +32,14 @@ class FormValidator {
       if (!isset($form[$field])) {
         die("No field $field in form.");
       }
-      $params = [$field, $form[$field], $message];
+      $params = [$field, $form[$field]];
+      foreach ($extra_params as $param) {
+        $params[] = 
+      }
+      
+      $params = array_merge([$field, $form[$field], $extra_params, $message]);
+      $str = print_r($params, 1);
+      debug("$str");
       call_user_func_array(array($this->validator, $func), $params);
     }
     return $this->validator->allErrors();
