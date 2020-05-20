@@ -44,8 +44,6 @@ class FormValidator {
       }
       $params[] = $message;
 
-//      $str = print_r($params, 1);
-//      debug("$str");
       call_user_func_array(array($this->validator, $func), $params);
     }
     return $this->validator->allErrors();

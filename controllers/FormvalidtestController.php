@@ -20,7 +20,7 @@ class FormvalidtestController extends Controller {
     );
   }
 
-  private function get_validator() {
+  private static function get_validator() {
     $v = new FormValidator();
     $v->rule('required', 'required');
     $v->rule('phone', 'phone');
@@ -31,7 +31,6 @@ class FormvalidtestController extends Controller {
     $v->rule('password', 'password');
     $v->rule('password2', 'same[password]');
     $v->rule('between', 'between[25,555]');
-    //email, integer, float, money, password
     return $v;
   }
   

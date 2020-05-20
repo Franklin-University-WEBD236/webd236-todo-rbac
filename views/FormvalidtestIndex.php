@@ -40,6 +40,9 @@
       <div class="form-group">
         <label for="between">Must be between 25 and 555</label>
         <input type="text" min="1" id="password2" name="form[between]" class="form-control" placeholder="Enter something" value="{{$this->value($form['between'])}}" />
+        <div class="invalid-feedback">
+          Please choose a username.
+        </div>
       </div>
       <div class="form-group mt-4">
         <button type="submit" class="btn btn-primary">Submit</button>
