@@ -24,22 +24,28 @@ class FormvalidtestController extends Controller {
     $v = new FormValidator();
     $v->rule('required', 'required');
     $v->rule('phone', 'phone');
+    $v->rule('email', 'email');
+    $v->rule('integer', 'integer');
+    $v->rule('float', 'float');
+    $v->rule('money', 'money');
+    $v->rule('password', 'password');
+    //email, integer, float, money, password
     return $v;
   }
   
   public function post_index() {
     $form = safeParam($_POST, 'form');
     $errors = $this->get_validator()->get_errors($form);
-    if ($errors) {
-      $this->view->renderTemplate(
-        "views/FormvalidtestIndex.php",
-        array(
-          'title' => 'FormvalidtestIndex',
-          'form' => $form,
-          'errors' => $errors,
-        )
-      );
+    if (!$errors) {
+      $this->view->flash("Success!");
     }
-    $this->
+    $this->view->renderTemplate(
+      "views/FormvalidtestIndex.php",
+      array(
+        'title' => 'FormvalidtestIndex',
+        'form' => $form,
+        'errors' => $errors,
+      )
+    );
   }
 }
