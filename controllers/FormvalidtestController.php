@@ -22,15 +22,15 @@ class FormvalidtestController extends Controller {
 
   private static function get_validator() {
     $v = new FormValidator();
-    $v->rule('required', 'required');
-    $v->rule('phone', 'phone');
-    $v->rule('email', 'email');
-    $v->rule('integer', 'integer');
-    $v->rule('float', 'float');
-    $v->rule('money', 'money');
-    $v->rule('password', 'password');
-    $v->rule('password2', 'same[password]');
-    $v->rule('between', 'between[25,555]');
+    $v->rule('required', 'required', 'Field is required');
+    $v->rule('phone', 'phone', 'Not a valid phone number');
+    $v->rule('email', 'email', 'Not a valid email address');
+    $v->rule('integer', 'integer', 'Not a valid integer');
+    $v->rule('float', 'float', 'Not a valid floating point number');
+    $v->rule('money', 'money', 'Not a valid amount of money');
+    $v->rule('password', 'password', 'Not strong enough');
+    $v->rule('password2', 'same[password]', 'Does not match');
+    $v->rule('between', 'between[25,555]', 'Not between 25 and 555');
     return $v;
   }
   
