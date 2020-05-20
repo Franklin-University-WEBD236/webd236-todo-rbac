@@ -38,11 +38,11 @@
         <input type="text" min="1" id="password2" name="form[password2]" class="form-control" placeholder="Enter something" value="{{$this->value($form['password2'])}}" />
       </div>
       <div class="form-group">
-        <label for="between">Must be between 25 and 555</label>
-        <input type="text" min="1" id="password2" name="form[between]" class="form-control" placeholder="Enter something" value="{{$this->value($form['between'])}}" />
-        <div class="invalid-feedback">
-          Please choose a username.
-        </div>
+        <label for="between" class="control-label text-danger">Must be between 25 and 555</label>
+        <input type="text" min="1" id="between" name="form[between]" class="form-control is-invalid" placeholder="Enter something" value="{{$this->value($form['between'])}}" is-invalid/>
+        <small class="text-danger">
+          {{$this->value($this->errors['between'])}}
+        </small>  
       </div>
       <div class="form-group mt-4">
         <button type="submit" class="btn btn-primary">Submit</button>
