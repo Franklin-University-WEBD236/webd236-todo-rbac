@@ -30,6 +30,7 @@ class FormvalidtestController extends Controller {
     $v->rule('money', 'money');
     $v->rule('password', 'password');
     $v->rule('password2', 'same[password]');
+    $v->rule('between', 'between[25,555]');
     //email, integer, float, money, password
     return $v;
   }
