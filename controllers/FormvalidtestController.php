@@ -15,7 +15,7 @@ class FormvalidtestController extends Controller {
     $this->view->renderTemplate(
       "views/FormvalidtestIndex.php",
       array(
-        'title' => 'FormvalidtestIndex',
+        'title' => 'Form Validation Test',
       )
     );
   }
@@ -29,6 +29,7 @@ class FormvalidtestController extends Controller {
     $v->rule('float', 'float');
     $v->rule('money', 'money');
     $v->rule('password', 'password');
+    $v->rule('password2', 'same[password]');
     //email, integer, float, money, password
     return $v;
   }
@@ -42,7 +43,7 @@ class FormvalidtestController extends Controller {
     $this->view->renderTemplate(
       "views/FormvalidtestIndex.php",
       array(
-        'title' => 'FormvalidtestIndex',
+        'title' => 'Form Validation Test',
         'form' => $form,
         'errors' => $errors,
       )

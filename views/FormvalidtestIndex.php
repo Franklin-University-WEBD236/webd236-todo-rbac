@@ -33,6 +33,10 @@
         <label for="password">A strong password</label>
         <input type="text" min="1" id="password" name="form[password]" class="form-control" placeholder="Enter something" value="{{$this->value($form['password'])}}" />
       </div>
+      <div class="form-group">
+        <label for="password2">Must match above password</label>
+        <input type="text" min="1" id="password2" name="form[password2]" class="form-control" placeholder="Enter something" value="{{$this->value($form['password2'])}}" />
+      </div>
       <div class="form-group mt-4">
         <button type="submit" class="btn btn-primary">Submit</button>
         <button class="btn btn-secondary" onclick="get('@@index@@')">Cancel</button>

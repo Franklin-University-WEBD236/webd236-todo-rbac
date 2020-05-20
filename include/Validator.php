@@ -79,7 +79,7 @@ class Validator {
     '(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9])))' .
     '{3}))\]))$/iD';
     if (!$message) {
-      $message = $value . " is not a valid email address.";
+      $message = "'" . $value . "' is not a valid email address.";
     }
     return $this->check($pattern, $key, $value, $message);
   }
@@ -87,7 +87,7 @@ class Validator {
   public function integer($key, $value, $message = false) {
     $pattern = '/^\d+$/';
     if (!$message) {
-      $message = $value . " is not a valid " . strtolower(self::fieldToHuman($key)) . ".";
+      $message = "'" . $value . "' is not a valid " . strtolower(self::fieldToHuman($key)) . ".";
     }
     return $this->check($pattern, $key, $value, $message);
   }
@@ -95,7 +95,7 @@ class Validator {
   public function float($key, $value, $message = false) {
     $pattern = '/^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/';
     if (!$message) {
-      $message = $value . " is not a valid " . strtolower(self::fieldToHuman($key)) . ".";
+      $message = "'" . $value . "' is not a valid " . strtolower(self::fieldToHuman($key)) . ".";
     }
     return $this->check($pattern, $key, $value, $message);
   }
@@ -103,7 +103,7 @@ class Validator {
   public function money($key, $value, $message = false) {
     $pattern = '/^\$?\d+([.]?\d{2})?$/';
     if (!$message) {
-      $message = $value . " is not a valid amount of money.";
+      $message = "'" . $value . "' is not a valid amount of money.";
     }
     return $this->check($pattern, $key, $value, $message);
   }
