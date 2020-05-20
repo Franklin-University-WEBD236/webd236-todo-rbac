@@ -32,14 +32,20 @@ class FormValidator {
       if (!isset($form[$field])) {
         die("No field $field in form.");
       }
+      
+      // build the array of parameters to the function
       $params = [$field, $form[$field]];
       foreach ($extra_params as $param) {
-        $params[] = 
+        if (isset($form[$param])) {
+          $params[] = $form[$param];
+        } else {
+          $params[] = $param;
+        }
       }
-      
-      $params = array_merge([$field, $form[$field], $extra_params, $message]);
-      $str = print_r($params, 1);
-      debug("$str");
+      $params[] = $message;
+
+//      $str = print_r($params, 1);
+//      debug("$str");
       call_user_func_array(array($this->validator, $func), $params);
     }
     return $this->validator->allErrors();
