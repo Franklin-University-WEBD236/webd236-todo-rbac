@@ -21,7 +21,10 @@ class FormValidator {
     foreach ($this->rules as $rule) {
       // get field, func, and message
       extract($rule);
-      if (preg_match('/[a-zA-Z_/'))
+      if (preg_match('/^([a-zA-Z_][a-zA-Z0-9_]*)\[(.*)\]$/m', $func, $matches)) {
+        $func = $matches[1];
+        
+      }
       if (!method_exists($this->validator, $func)) {
         die("Unknown form validation rule $func.");
       }

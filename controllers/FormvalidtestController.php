@@ -29,7 +29,7 @@ class FormvalidtestController extends Controller {
     $v->rule('float', 'float');
     $v->rule('money', 'money');
     $v->rule('password', 'password');
-    $v->rule('password2', 'same[password]');
+    $v->rule('password2', 'same[password,pass,what]');
     //email, integer, float, money, password
     return $v;
   }
