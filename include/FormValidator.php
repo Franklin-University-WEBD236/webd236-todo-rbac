@@ -9,7 +9,7 @@ class FormValidator {
   }
   
   // required, phone, email, integer, float, money, password, between[low,high], same[other]
-  public function rule($field, $func, $message=null) {
+  public function rule($field, $func, $message=false) {
     $rules[] = [
       'field' => $field,
       'func' => $func,
@@ -19,14 +19,17 @@ class FormValidator {
   
   public function get_errors($form) {
     foreach ($rules as $rule) {
+      // get field, func, and message
       extract($rule);
       if (!method_exists($this->validator, $func)) {
-        die("Unknown form validation rule $func");
+        die("Unknown form validation rule $func.");
       }
-      $key = $rule[]
+      if (!isset($form[$field])) {
+        die("No field $field in form.")
+      }
       $params = [$field, $form[$field], $message];
       call_user_func_array(array($this->validator, $func), $params);
     }
-    return $this->validator
+    return $this->validator->allErrors();
   }
 }
