@@ -19,4 +19,22 @@ class FormvalidtestController extends Controller {
       )
     );
   }
+
+  private function get_validator() {
+    $v = new FormValidator();
+    $v->rule();
+  }
+  
+  public function post_index() {
+    $form = safeParam($_POST, 'form');
+    $validator = $this->getValidator();
+    $errors = $validator->get_errors($form);
+    $this->view->renderTemplate(
+      "views/FormvalidtestIndex.php",
+      array(
+        'title' => 'FormvalidtestIndex',
+        'form' => $form,
+      )
+    );
+  }
 }
