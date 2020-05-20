@@ -30,14 +30,16 @@ class FormvalidtestController extends Controller {
   public function post_index() {
     $form = safeParam($_POST, 'form');
     $errors = $this->get_validator()->get_errors($form);
-    debug(print_r($errors),1);
-    $this->view->renderTemplate(
-      "views/FormvalidtestIndex.php",
-      array(
-        'title' => 'FormvalidtestIndex',
-        'form' => $form,
-        'errors' => $errors,
-      )
-    );
+    if ($errors) {
+      $this->view->renderTemplate(
+        "views/FormvalidtestIndex.php",
+        array(
+          'title' => 'FormvalidtestIndex',
+          'form' => $form,
+          'errors' => $errors,
+        )
+      );
+    }
+    $this->
   }
 }

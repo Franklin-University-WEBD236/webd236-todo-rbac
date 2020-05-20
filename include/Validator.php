@@ -52,7 +52,7 @@ class Validator {
   public function phone($key, $value, $message = false) {
     $pattern = "/^\(?\d{3}\)?[. -]?\d{3}[. -]?\d{4}$/";
     if (!$message) {
-      $message = $value . " is not a valid phone number.";
+      $message = "'" . $value . "' is not a valid phone number.";
     }
     return $this->check($pattern, $key, $value, $message);
   }

@@ -10,7 +10,7 @@ class FormValidator {
   
   // required, phone, email, integer, float, money, password, between[low,high], same[other]
   public function rule($field, $func, $message=false) {
-    $rules[] = [
+    $this->rules[] = [
       'field' => $field,
       'func' => $func,
       'message' => $message,
@@ -27,7 +27,6 @@ class FormValidator {
       if (!isset($form[$field])) {
         die("No field $field in form.");
       }
-      debug("checking ")
       $params = [$field, $form[$field], $message];
       call_user_func_array(array($this->validator, $func), $params);
     }
