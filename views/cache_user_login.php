@@ -67,7 +67,7 @@
         </div>
       </div>
 
-<?php  if (isset($errors)): ?>
+<?php  if (isset($errors) && $errors): ?>
 <div class="row">
   <div class="col-lg-12">
     <div class="alert alert-danger">

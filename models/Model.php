@@ -1,7 +1,7 @@
 <?php
 
 class Model implements ArrayAccess {
-  protected static $db = null;  
+  protected static $db = null; 
   private static $fieldNames = array('id');
   
   public function __construct($fields = null) {
@@ -53,4 +53,3 @@ class Model implements ArrayAccess {
   }
 }
 Model::getDB();
-?>
