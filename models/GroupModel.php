@@ -1,5 +1,5 @@
 <?php
-class Group extends Model {
+class GroupModel extends Model {
 
   protected $name;
 
@@ -33,7 +33,7 @@ class Group extends Model {
   private static function fromRows($rows) {
     $result = array();
     foreach ($rows as $row) {
-      $result[] = new Group($row);
+      $result[] = new GroupModel($row);
     }
     return $result;
   }
@@ -48,14 +48,14 @@ class Group extends Model {
     $st = self::$db -> prepare("SELECT * FROM groups WHERE id = :id");
     $st -> bindParam(':id', $id);
     $st -> execute();
-    return new Group($st -> fetch(PDO::FETCH_ASSOC));
+    return new GroupModel($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public static function findByName($name) {
     $st = self::$db -> prepare("SELECT * FROM groups WHERE name = :name");
     $st -> bindParam(':name', $name);
     $st -> execute();
-    return new Group($st -> fetch(PDO::FETCH_ASSOC));
+    return new GroupModel($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public function insert() {

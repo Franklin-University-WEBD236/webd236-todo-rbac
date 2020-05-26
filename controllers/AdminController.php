@@ -9,11 +9,13 @@ class AdminController extends Controller {
   public function get_index() {
     $this -> auth -> ensure('admin_page');
     $users = UserModel::findAll();
+    $groups = GroupModel::findAll();
     $this->view->renderTemplate(
       "views/AdminIndex.php",
       array(
         'title' => 'Administrative interface',
         'users' => $users,
+        'groups' => $groups,
       )
     );
   }
