@@ -151,7 +151,7 @@ class GroupModel extends Model {
     $statement -> bindParam(':id', $this -> id);
     $statement -> execute();
     $rows = $statement -> fetchAll(PDO::FETCH_ASSOC);
-    return Permission::fromRows($rows);
+    return PermissionModel::fromRows($rows);
   }
 
   public function getNonPermissions() {
@@ -159,7 +159,7 @@ class GroupModel extends Model {
     $statement -> bindParam(':id', $this -> id);
     $statement -> execute();
     $rows = $statement -> fetchAll(PDO::FETCH_ASSOC);
-    return Permission::fromRows($rows);
+    return PermissionModel::fromRows($rows);
   }
 
 }

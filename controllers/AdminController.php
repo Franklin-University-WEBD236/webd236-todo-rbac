@@ -109,4 +109,19 @@ class AdminController extends Controller {
     $this->view->flash("User deleted");
     $this->view->redirectRelative("admin");
   }
+
+  public function get_edit_group($id) {
+    $group = GroupModel::findById($id);
+    $permissions = $group -> getPermissions();
+    $available_permissions = $group -> getNonPermissions();
+    $this->view->renderTemplate(
+      "views/AdminEditGroup.php",
+      array(
+        'title' => 'Edit group',
+        'group' => $group,
+        'permissions' => $permissions,
+        'available_permissions' => $available_permissions,
+      )
+    );
+  }
 }
