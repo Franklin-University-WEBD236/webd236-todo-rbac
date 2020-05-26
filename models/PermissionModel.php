@@ -2,11 +2,16 @@
 
 class PermissionModel extends Model {
 
-  protected $name;
-
-  function __construct($fields = array()) {
-    parent::__construct($fields);
-    $this -> setName(safeParam($fields, 'name'));
+  private static $fieldNames = array('name');
+  
+  public function __construct($fields = null) {
+    foreach (self::$fieldNames as $attribute) {
+      if (isset($fields[$attribute])) {
+        $this->$attribute = $fields[$attribute];
+      } else {
+        $this->$attribute = null;
+      }
+    }
   }
 
   public function validate($throw = false) {
