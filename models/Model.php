@@ -15,6 +15,14 @@ class Model implements ArrayAccess {
     self::adHocQuery("PRAGMA foreign_keys=ON;");
   }
 
+  public function toArray() {
+    $fields = [];
+    foreach (self::$fieldNames as $attribute) {
+      $fields[] = $this[$attribute];
+    }
+    return $fields;
+  }
+  
   public static function getDB() {
     if (!self::$db) {
       try {

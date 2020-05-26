@@ -118,7 +118,7 @@ class AdminController extends Controller {
       "views/AdminEditGroup.php",
       array(
         'title' => 'Edit group',
-        'group' => $group,
+        'form' => $group -> toArray(),
         'permissions' => $permissions,
         'available_permissions' => $available_permissions,
       )

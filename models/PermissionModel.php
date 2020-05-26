@@ -5,6 +5,7 @@ class PermissionModel extends Model {
   private static $fieldNames = array('name');
   
   public function __construct($fields = null) {
+    parent::__construct($fields);
     foreach (self::$fieldNames as $attribute) {
       if (isset($fields[$attribute])) {
         $this->$attribute = $fields[$attribute];
@@ -14,6 +15,14 @@ class PermissionModel extends Model {
     }
   }
 
+  public function toArray() {
+    $fields = parent::toArray();
+    foreach (self::$fieldNames as $attribute) {
+      $fields[] = $this[$attribute];
+    }
+    return $fields;
+  }
+  
   public function validate($throw = false) {
     $validator = new Validator();
     $validator -> required('name', $this -> name, "Permission name is required");
