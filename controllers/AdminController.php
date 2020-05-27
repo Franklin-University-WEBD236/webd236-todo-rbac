@@ -124,4 +124,30 @@ class AdminController extends Controller {
       )
     );
   }
+
+  public function post_edit_group($id) {
+    $group = GroupModel::findById($id);
+    $this -> validator -> required('name', safeParam($form, 'name'));
+    if ($this->validator->hasErrors()) {
+      $permissions = $group -> getPermissions();
+      $available_permissions = $group -> getNonPermissions();
+      $this->view->renderTemplate(
+        "views/AdminEditGroup.php",
+        array(
+          'title' => 'Edit group',
+          'form' => $group -> toArray(),
+          'permissions' => $permissions,
+          'available_permissions' => $available_permissions,
+          'errors' => $this->validator->allErrors(),
+        )
+      );
+          
+    }
+    $this->view->renderTemplate(
+      "views/AdminEdit_group.php",
+      array(
+        'title' => 'AdminEdit_group',
+      )
+    );
+  }
 }

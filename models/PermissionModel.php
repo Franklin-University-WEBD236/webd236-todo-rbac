@@ -18,7 +18,7 @@ class PermissionModel extends Model {
   public function toArray() {
     $fields = parent::toArray();
     foreach (self::$fieldNames as $attribute) {
-      $fields[] = $this[$attribute];
+      $fields[$attribute] = $this[$attribute];
     }
     return $fields;
   }

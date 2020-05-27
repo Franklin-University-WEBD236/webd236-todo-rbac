@@ -1,11 +1,17 @@
 <?php
 class GroupModel extends Model {
 
-  protected $name;
-
-  function __construct($fields = array()) {
+  private static $fieldNames = ['name'];
+  
+  public function __construct($fields = null) {
     parent::__construct($fields);
-    $this -> setName(safeParam($fields, 'name'));
+    foreach (self::$fieldNames as $attribute) {
+      if (isset($fields[$attribute])) {
+        $this->$attribute = $fields[$attribute];
+      } else {
+        $this->$attribute = null;
+      }
+    }
   }
 
   public function validate($throw = false) {
@@ -38,6 +44,14 @@ class GroupModel extends Model {
     return $result;
   }
 
+  public function toArray() {
+    $fields = parent::toArray();
+    foreach (self::$fieldNames as $attribute) {
+      $fields[$attribute] = $this[$attribute];
+    }
+    return $fields;
+  }
+  
   public static function findAll() {
     $st = self::$db -> prepare("SELECT * FROM groups ORDER BY name");
     $st -> execute();

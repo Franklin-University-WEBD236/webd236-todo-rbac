@@ -18,7 +18,7 @@ class Model implements ArrayAccess {
   public function toArray() {
     $fields = [];
     foreach (self::$fieldNames as $attribute) {
-      $fields[] = $this[$attribute];
+      $fields[$attribute] = $this[$attribute];
     }
     return $fields;
   }
