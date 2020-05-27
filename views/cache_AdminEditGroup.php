@@ -117,6 +117,17 @@
         <button class="btn btn-secondary" onclick="get('/index')">Cancel</button>
       </div>
     </form>
+<?php  foreach ($permissions as $permission) : ?>
+        <tr>
+          <td class="align-middle"><?php echo(htmlspecialchars($permission -> name)); ?></td>
+          <td>
+            <div class="btn-toolbar align-middle float-right">
+              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('/admin/remove_permission/<?php echo(htmlspecialchars($permission -> id)); ?>')"><span class="material-icons">delete</span></button>
+            </div>
+          </td>
+        </tr>
+<?php  endforeach; ?>
+    
     
   </div>
 </div>
