@@ -70,7 +70,7 @@ class GroupModel extends Model {
     $st = self::$db -> prepare("SELECT * FROM groups WHERE id = :id");
     $st -> bindParam(':id', $id);
     $st -> execute();
-    return new GroupModel($st -> fetch(PDO::FETCH_ASSOC));
+    return self::fromRow($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public static function findByName($name) {
@@ -96,7 +96,6 @@ class GroupModel extends Model {
     $statement = self::$db -> prepare("UPDATE groups SET name = :name WHERE id = :id");
     $statement -> bindParam(':name', $this -> name);
     $statement -> bindParam(':id', $this -> id);
-    die("'{$this->name}' '{$this->id}'");
     $statement -> execute();
     return $this;
   }
