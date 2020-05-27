@@ -126,6 +126,7 @@ class AdminController extends Controller {
   }
 
   public function post_edit_group($id) {
+    $form = safeParam($_POST, 'form');
     $group = GroupModel::findById($id);
     $this -> validator -> required('name', safeParam($form, 'name'));
     if ($this->validator->hasErrors()) {
@@ -141,13 +142,10 @@ class AdminController extends Controller {
           'errors' => $this->validator->allErrors(),
         )
       );
-          
     }
-    $this->view->renderTemplate(
-      "views/AdminEdit_group.php",
-      array(
-        'title' => 'AdminEdit_group',
-      )
-    );
+    $this->view->flash("Group name updated");
+    $group -> name = trim(safeParam($form, 'name'));
+    $group -> update();
+    $this->view->redirectRelative("admin");
   }
 }

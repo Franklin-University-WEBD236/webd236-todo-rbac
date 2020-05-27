@@ -85,7 +85,7 @@ class GroupModel extends Model {
   public function update() {
     $this -> validate(true);
     $this -> clean();
-    $statement = self::$db -> prepare("UPDATE groups SET name=:name WHERE id=:id");
+    $statement = self::$db -> prepare("UPDATE groups SET name = :name WHERE id = :id");
     $statement -> bindParam(':name', $this -> name);
     $statement -> bindParam(':id', $this -> id);
     $statement -> execute();
