@@ -17,6 +17,19 @@
         <button class="btn btn-secondary" onclick="get('@@index@@')">Cancel</button>
       </div>
     </form>
+          'permissions' => $permissions,
+          'available_permissions' => $available_permissions,
+[[ foreach ($permissions as $permission) : ]]
+        <tr>
+          <td class="align-middle">{{$permission -> name}}</td>
+          <td>
+            <div class="btn-toolbar align-middle float-right">
+              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@admin/remove_permission/{{$permission -> id}@@')"><span class="material-icons">delete</span></button>
+            </div>
+          </td>
+        </tr>
+[[ endforeach; ]]
+    
     
   </div>
 </div>
