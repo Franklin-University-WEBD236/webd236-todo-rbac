@@ -17,7 +17,11 @@
         <button class="btn btn-secondary" onclick="get('@@index@@')">Cancel</button>
       </div>
     </form>
-    
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-lg-12">
     <table class="table table-striped" frame="box">
       <thead class="thead-dark">
         <tr>
@@ -32,18 +36,22 @@
           <td class="align-middle">{{$permission -> name}}</td>
           <td>
             <div class="btn-toolbar align-middle float-right">
-              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@admin/remove_permission/{{$permission -> id}}@@')"><span class="material-icons">delete</span></button>
+              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@admin/remove_permission/{{$form['id']}}/{{$permission['id']}}@@')"><span class="material-icons">delete</span></button>
             </div>
           </td>
         </tr>
 [[ endforeach; ]]
       </tbody>
     </table>
+  </div>
+</div>
 
+<div class="row mt-4">
+  <div class="col-lg-12">
     <table class="table table-striped" frame="box">
       <thead class="thead-dark">
         <tr>
-          <th>Assigned permissions for {{$this->value($form['name'])}}</th>
+          <th>Unassigned permissions for {{$this->value($form['name'])}}</th>
           <th></th>
         </tr>
       </thead>
@@ -54,14 +62,13 @@
           <td class="align-middle">{{$permission -> name}}</td>
           <td>
             <div class="btn-toolbar align-middle float-right">
-              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@admin/remove_permission/{{$permission -> id}}@@')"><span class="material-icons">add-circle</span></button>
+              <button class="btn btn-success d-flex justify-content-center align-content-between" onclick="post('@@admin/add_permission/{{$form['id']}}/{{$permission['id']}}@@')"><span class="material-icons">add_circle</span></button>
             </div>
           </td>
         </tr>
 [[ endforeach; ]]
       </tbody>
     </table>
-  
   </div>
 </div>
           
