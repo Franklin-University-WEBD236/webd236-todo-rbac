@@ -17,6 +17,16 @@
         <button class="btn btn-secondary" onclick="get('@@index@@')">Cancel</button>
       </div>
     </form>
+    
+    <table class="table table-striped" frame="box">
+      <thead class="thead-dark">
+        <tr>
+          <th>Assigned permissions for {{$this->value($form['name'])}}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+
 [[ foreach ($permissions as $permission) : ]]
         <tr>
           <td class="align-middle">{{$permission -> name}}</td>
@@ -27,8 +37,31 @@
           </td>
         </tr>
 [[ endforeach; ]]
-    
-    
+      </tbody>
+    </table>
+
+    <table class="table table-striped" frame="box">
+      <thead class="thead-dark">
+        <tr>
+          <th>Assigned permissions for {{$this->value($form['name'])}}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+
+[[ foreach ($available_permissions as $permission) : ]]
+        <tr>
+          <td class="align-middle">{{$permission -> name}}</td>
+          <td>
+            <div class="btn-toolbar align-middle float-right">
+              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@admin/remove_permission/{{$permission -> id}}@@')"><span class="material-icons">add-circle</span></button>
+            </div>
+          </td>
+        </tr>
+[[ endforeach; ]]
+      </tbody>
+    </table>
+  
   </div>
 </div>
           
