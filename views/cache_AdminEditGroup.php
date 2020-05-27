@@ -104,7 +104,7 @@
   <div class="col-lg-12">
     <h1><?php echo(htmlspecialchars($title)); ?></h1>
     <?php echo(htmlspecialchars(debug($form))); ?>
-    <form action="admin/edit_group" method="post">
+    <form action="admin/edit_group/<?php echo(htmlspecialchars($form['id'])); ?>" method="post">
       <div class="form-group">
         <div class="row">
           <div class="col">

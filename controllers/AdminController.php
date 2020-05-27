@@ -128,6 +128,7 @@ class AdminController extends Controller {
   public function post_edit_group($id) {
     $form = safeParam($_POST, 'form');
     $group = GroupModel::findById($id);
+    die("{$group->name}, {$group->id}");
     $this -> validator -> required('name', safeParam($form, 'name'));
     if ($this->validator->hasErrors()) {
       $permissions = $group -> getPermissions();

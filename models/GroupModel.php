@@ -36,10 +36,18 @@ class GroupModel extends Model {
     return $this -> name;
   }
 
+  private static function fromRow($row) {
+    $group = null;
+    if ($row) {
+      $group = new GroupModel($row);
+    }
+    return $group;
+  }
+
   private static function fromRows($rows) {
     $result = array();
     foreach ($rows as $row) {
-      $result[] = new GroupModel($row);
+      $result[] = self::fromRow($row);
     }
     return $result;
   }
@@ -88,6 +96,7 @@ class GroupModel extends Model {
     $statement = self::$db -> prepare("UPDATE groups SET name = :name WHERE id = :id");
     $statement -> bindParam(':name', $this -> name);
     $statement -> bindParam(':id', $this -> id);
+    die("'{$this->name}' '{$this->id}'");
     $statement -> execute();
     return $this;
   }
