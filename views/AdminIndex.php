@@ -50,7 +50,21 @@
 [[ endforeach; ]]
       </tbody>
     </table>
-  
+
+    <form action="@@admin/add_group@@" method="post">
+      <div class="form-group">
+        <div class="row">
+          <div class="col">
+            <label for="name">Add a group</label>
+            <input type="text" min="1" id="name" name="form[name]" class="form-control" placeholder="Enter name" value="{{$this->value($form['name'])}}" />
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-2">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+    
   </div>
 </div>
           
