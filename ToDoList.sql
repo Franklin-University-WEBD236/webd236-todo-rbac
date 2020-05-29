@@ -80,6 +80,7 @@ INSERT INTO "permissions" VALUES(5, "admin_page");
 INSERT INTO "permissions" VALUES(6, "edit_user");
 INSERT INTO "permissions" VALUES(7, "delete_user");
 INSERT INTO "permissions" VALUES(8, "view_user");
+INSERT INTO "permissions" VALUES(9, "delete_group");
 
 CREATE TABLE `usergroups` (
   userId INTEGER NOT NULL,
@@ -116,6 +117,7 @@ INSERT INTO "grouppermissions" VALUES(5, 2);
 INSERT INTO "grouppermissions" VALUES(6, 2);
 INSERT INTO "grouppermissions" VALUES(7, 2);
 INSERT INTO "grouppermissions" VALUES(8, 2);
+INSERT INTO "grouppermissions" VALUES(9, 2);
 
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('todo',24);

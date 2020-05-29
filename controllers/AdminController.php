@@ -158,11 +158,18 @@ class AdminController extends Controller {
   }
 
   public function post_remove_permission($group_id, $perm_id) {
-    $this->view->renderTemplate(
-      "views/AdminRemove_permission.php",
-      array(
-        'title' => 'AdminRemove_permission',
-      )
-    );
+    $permission = PermissionModel::findById($perm_id);
+    $group = GroupModel::findById($group_id);
+    $group -> removePermission($permission);
+    $this->view->flash("Permission removed");
+    $this->view->redirectRelative("admin/edit_group/$group_id");
+  }
+
+  public function post_delete_group($id) {
+    $this -> auth -> ensure('delete_group');
+    $user = GroupModel::findById($id);
+    $user->delete();
+    $this->view->flash("Group deleted");
+    $this->view->redirectRelative("admin");
   }
 }
