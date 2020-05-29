@@ -106,8 +106,13 @@ class GroupModel extends Model {
   }
 
   private static function deleteById($id) {
-    $statement = self::$db -> prepare("DELETE FROM groups WHERE id = :id");
+    echo "<pre>";
+    print_r(self::$db->errorInfo());
+    print_r($id);
+    $statement = self::$db -> prepare("DELETE FROM groups WHERE id = 1");
     debug(var_dump($statement));
+    print_r(self::$db->errorInfo());
+    echo "</pre>";
     $statement -> bindParam(':id', $id);
     $statement -> execute();
   }
