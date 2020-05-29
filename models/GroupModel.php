@@ -101,7 +101,7 @@ class GroupModel extends Model {
   }
 
   public function delete() {
-    self::deleteById($this -> getId());
+    self::deleteById($this -> id);
   }
 
   private static function deleteById($id) {
@@ -126,29 +126,29 @@ class GroupModel extends Model {
 
   public function addUser($user) {
     $statement = self::$db -> prepare("INSERT INTO usergroups (groupId, userId) VALUES (:groupId, :userId)");
-    $statement -> bindValue(':groupId', $this -> getId());
-    $statement -> bindValue(':userId', $user -> getId());
+    $statement -> bindValue(':groupId', $this -> id);
+    $statement -> bindValue(':userId', $user -> id);
     $statement -> execute();
   }
 
   public function removeUser($user) {
     $statement = self::$db -> prepare("DELETE FROM usergroups WHERE groupId = :groupId AND userId = :userId");
-    $statement -> bindValue(':groupId', $this -> getId());
-    $statement -> bindValue(':userId', $user -> getId());
+    $statement -> bindValue(':groupId', $this -> id);
+    $statement -> bindValue(':userId', $user -> id);
     $statement -> execute();
   }
 
   public function addPermission($permission) {
     $statement = self::$db -> prepare("INSERT INTO grouppermissions (groupId, permissionId) VALUES (:groupId, :permissionId)");
-    $statement -> bindValue(':groupId', $this -> getId());
-    $statement -> bindValue(':permissionId', $permission -> getId());
+    $statement -> bindValue(':groupId', $this -> id);
+    $statement -> bindValue(':permissionId', $permission -> id);
     $statement -> execute();
   }
 
   public function removePermission($permission) {
     $statement = self::$db -> prepare("DELETE FROM grouppermissions WHERE permissionId = :permissionId AND groupId = :groupId");
-    $statement -> bindValue(':groupId', $this -> getId());
-    $statement -> bindValue(':permissionId', $permission -> getId());
+    $statement -> bindValue(':groupId', $this -> id);
+    $statement -> bindValue(':permissionId', $permission -> id);
     $statement -> execute();
   }
 

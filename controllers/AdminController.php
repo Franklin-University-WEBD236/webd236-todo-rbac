@@ -148,4 +148,21 @@ class AdminController extends Controller {
     $group -> update();
     $this->view->redirectRelative("admin");
   }
+
+  public function post_add_permission($group_id, $perm_id) {
+    $permission = PermissionModel::findById($perm_id);
+    $group = GroupModel::findById($group_id);
+    $group -> addPermission($permission);
+    $this->view->flash("Permission added");
+    $this->view->redirectRelative("admin/edit_group/$group_id");
+  }
+
+  public function post_remove_permission($group_id, $perm_id) {
+    $this->view->renderTemplate(
+      "views/AdminRemove_permission.php",
+      array(
+        'title' => 'AdminRemove_permission',
+      )
+    );
+  }
 }
