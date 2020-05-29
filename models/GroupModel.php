@@ -101,11 +101,13 @@ class GroupModel extends Model {
   }
 
   public function delete() {
+    debug(var_dump($this));
     self::deleteById($this -> id);
   }
 
   private static function deleteById($id) {
     $statement = self::$db -> prepare("DELETE FROM groups WHERE id = :id");
+    debug(var_dump($statement));
     $statement -> bindParam(':id', $id);
     $statement -> execute();
   }
