@@ -40,11 +40,9 @@ class Model implements ArrayAccess {
   }
 
   public static function adHocQuery($q) {
-    echo("query: $q");
-    self::$db->query($q);
-    //$st = self::$db -> prepare($q);
-    //$st -> execute();
-    //return $st -> fetchAll(PDO::FETCH_ASSOC);
+    $st = self::$db -> prepare($q);
+    $st -> execute();
+    return $st -> fetchAll(PDO::FETCH_ASSOC);
   }
   
   public function offsetExists($offset) {

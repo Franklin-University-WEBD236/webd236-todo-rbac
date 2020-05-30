@@ -61,20 +61,20 @@ class GroupModel extends Model {
   }
   
   public static function findAll() {
-    $st = self::$db -> prepare("SELECT * FROM rbac_groups ORDER BY name");
+    $st = self::$db -> prepare("SELECT * FROM groups ORDER BY name");
     $st -> execute();
     return self::fromRows($st -> fetchAll(PDO::FETCH_ASSOC));
   }
 
   public static function findById($id) {
-    $st = self::$db -> prepare("SELECT * FROM rbac_groups WHERE id = :id");
+    $st = self::$db -> prepare("SELECT * FROM groups WHERE id = :id");
     $st -> bindParam(':id', $id);
     $st -> execute();
     return self::fromRow($st -> fetch(PDO::FETCH_ASSOC));
   }
 
   public static function findByName($name) {
-    $st = self::$db -> prepare("SELECT * FROM rbac_groups WHERE name = :name");
+    $st = self::$db -> prepare("SELECT * FROM groups WHERE name = :name");
     $st -> bindParam(':name', $name);
     $st -> execute();
     return new GroupModel($st -> fetch(PDO::FETCH_ASSOC));
@@ -83,7 +83,7 @@ class GroupModel extends Model {
   public function insert() {
     $this -> validate(true);
     $this -> clean();
-    $statement = self::$db -> prepare("INSERT INTO rbac_groups (name) VALUES (:name)");
+    $statement = self::$db -> prepare("INSERT INTO groups (name) VALUES (:name)");
     $statement -> bindParam(':name', $this -> name);
     $statement -> execute();
     $this -> setId(self::$db -> lastInsertId());
@@ -93,7 +93,7 @@ class GroupModel extends Model {
   public function update() {
     $this -> validate(true);
     $this -> clean();
-    $statement = self::$db -> prepare("UPDATE rbac_groups SET name = :name WHERE id = :id");
+    $statement = self::$db -> prepare("UPDATE groups SET name = :name WHERE id = :id");
     $statement -> bindParam(':name', $this -> name);
     $statement -> bindParam(':id', $this -> id);
     $statement -> execute();
@@ -106,27 +106,20 @@ class GroupModel extends Model {
   }
 
   private static function delete_by_id($id) {
-    echo "<pre>";
-    print_r(self::$db->errorInfo());
-    print_r($id);
-    self::adHocQuery("DELETE FROM rbac_groups WHERE id = $id");
-    //$statement = self::$db -> prepare("DELETE FROM rbac_groups WHERE id = :id");
-    debug(var_dump($statement));
-    print_r(self::$db->errorInfo());
-    echo "</pre>";
-    //$statement -> bindParam(':id', $id);
-    //$statement -> execute();
+    $statement = self::$db -> prepare("DELETE FROM groups WHERE id = :id");
+    $statement -> bindParam(':id', $id);
+    $statement -> execute();
   }
 
   public static function findByUserId($userId) {
-    $statement = self::$db -> prepare("SELECT * FROM rbac_groups where rbac_groups.id in (SELECT rbac_groups.id from rbac_groups, usergroups WHERE rbac_groups.id = usergroups.groupId AND usergroups.userId = :userId) order by name");
+    $statement = self::$db -> prepare("SELECT * FROM groups where groups.id in (SELECT groups.id from groups, usergroups WHERE groups.id = usergroups.groupId AND usergroups.userId = :userId) order by name");
     $statement -> bindParam(':userId', $userId);
     $statement -> execute();
     return self::fromRows($statement->fetchAll(PDO::FETCH_ASSOC));
   }
 
   public static function findByNotUserId($userId) {
-    $statement = self::$db -> prepare("SELECT * FROM rbac_groups where rbac_groups.id not in (SELECT rbac_groups.id from rbac_groups, usergroups WHERE rbac_groups.id = usergroups.groupId AND usergroups.userId = :userId) order by name");
+    $statement = self::$db -> prepare("SELECT * FROM groups where groups.id not in (SELECT groups.id from groups, usergroups WHERE groups.id = usergroups.groupId AND usergroups.userId = :userId) order by name");
     $statement -> bindParam(':userId', $userId);
     $statement -> execute();
     return self::fromRows($statement->fetchAll(PDO::FETCH_ASSOC));
