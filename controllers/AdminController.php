@@ -181,7 +181,20 @@ class AdminController extends Controller {
     }
     $this->view->flash("Group created");
     $group = new GroupModel($form);
-    $group -> update();
+    $group -> insert();
     $this->view->redirectRelative("admin");
+  }
+
+  public function get_edit_group_members() {
+    // Put your code for get_edit_group_members here, something like
+    // 1. Load and validate parameters or form contents
+    // 2. Query or update the database
+    // 3. Render a template or redirect
+    $this->view->renderTemplate(
+      "views/AdminEdit_group_members.php",
+      array(
+        'title' => 'AdminEdit_group_members',
+      )
+    );
   }
 }

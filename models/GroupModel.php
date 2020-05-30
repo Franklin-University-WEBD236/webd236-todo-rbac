@@ -86,7 +86,7 @@ class GroupModel extends Model {
     $statement = self::$db -> prepare("INSERT INTO groups (name) VALUES (:name)");
     $statement -> bindParam(':name', $this -> name);
     $statement -> execute();
-    $this -> setId(self::$db -> lastInsertId());
+    $this -> id = self::$db -> lastInsertId();
     return $this;
   }
 
