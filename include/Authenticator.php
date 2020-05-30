@@ -8,12 +8,12 @@ class Authenticator {
   const PERMS_QUERY =
     "SELECT DISTINCT permissions.id as id, permissions.name as name
      FROM
-        user, usergroups, groups_, grouppermissions, permissions
+        user, usergroups, rbac_groups, grouppermissions, permissions
      WHERE
         user.id = :userId AND
         user.id = usergroups.userId AND
-        usergroups.groupId = groups_.id AND
-        groups_.id = grouppermissions.groupId AND
+        usergroups.groupId = rbac_groups.id AND
+        rbac_groups.id = grouppermissions.groupId AND
         grouppermissions.permissionId = permissions.id";
 
   private function __construct() {

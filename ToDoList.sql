@@ -2,7 +2,7 @@ PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
 DROP TABLE IF EXISTS `user`;
 DROP TABLE IF EXISTS `todo`;
-DROP TABLE IF EXISTS `groups_`;
+DROP TABLE IF EXISTS `rbac_groups`;
 DROP TABLE IF EXISTS `permissions`;
 DROP TABLE IF EXISTS `usergroups`;
 DROP TABLE IF EXISTS `grouppermissions`;
@@ -59,13 +59,13 @@ INSERT INTO "todo" VALUES('Suggest a new king.',0,24,3);
 ------------------------------------------------------------------------
 -- Role based access control tables
 ------------------------------------------------------------------------
-CREATE TABLE `groups_` (
+CREATE TABLE `rbac_groups` (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL
 );
 
-INSERT INTO "groups_" VALUES(1, "Users");
-INSERT INTO "groups_" VALUES(2, "Administrators");
+INSERT INTO "rbac_groups" VALUES(1, "Users");
+INSERT INTO "rbac_groups" VALUES(2, "Administrators");
 
 CREATE TABLE `permissions` (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -86,7 +86,7 @@ CREATE TABLE `usergroups` (
   userId INTEGER NOT NULL,
   groupId INTEGER NOT NULL,
   FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY(groupId) REFERENCES groups_(id) ON DELETE CASCADE
+  FOREIGN KEY(groupId) REFERENCES rbac_groups(id) ON DELETE CASCADE
 );
 
 -- standard users
@@ -103,7 +103,7 @@ CREATE TABLE `grouppermissions` (
   permissionId INTEGER NOT NULL,
   groupId INTEGER NOT NULL,
   FOREIGN KEY(permissionId) REFERENCES permissions(id) ON DELETE CASCADE,
-  FOREIGN KEY(groupId) REFERENCES groups_(id) ON DELETE CASCADE
+  FOREIGN KEY(groupId) REFERENCES rbac_groups(id) ON DELETE CASCADE
 );
 
 -- standard user permissions
@@ -122,6 +122,6 @@ INSERT INTO "grouppermissions" VALUES(9, 2);
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('todo',24);
 INSERT INTO "sqlite_sequence" VALUES('user',5);
-INSERT INTO "sqlite_sequence" VALUES('groups_',2);
+INSERT INTO "sqlite_sequence" VALUES('rbac_groups',2);
 INSERT INTO "sqlite_sequence" VALUES('permissions',8);
 COMMIT;

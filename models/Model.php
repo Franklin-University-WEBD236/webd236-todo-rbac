@@ -12,7 +12,6 @@ class Model implements ArrayAccess {
         $this->$attribute = null;
       }
     }
-    self::adHocQuery("PRAGMA foreign_keys=ON;");
   }
 
   public function toArray() {
@@ -32,6 +31,7 @@ class Model implements ArrayAccess {
         if (!self::$db) {
           errorPage(500, print_r($db->errorInfo(), 1) );
         }
+        self::adHocQuery("PRAGMA foreign_keys=ON;");
       } catch (PDOException $e) {
           errorPage(500, "Could not open database. " . $e->getMessage() . $e->getTraceAsString());
       }
@@ -40,6 +40,7 @@ class Model implements ArrayAccess {
   }
 
   public static function adHocQuery($q) {
+    echo("query: $q");
     $st = self::$db -> prepare($q);
     $st -> execute();
     return $st -> fetchAll(PDO::FETCH_ASSOC);
