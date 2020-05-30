@@ -172,4 +172,16 @@ class AdminController extends Controller {
     $this->view->flash("Group deleted");
     $this->view->redirectRelative("admin");
   }
+
+  public function post_add_group() {
+    $this -> auth -> ensure('add_group');
+    $form = safeParam($_POST, 'form');
+    $this -> validator -> required('name', safeParam($form, 'name'));
+    if ($this->validator->hasErrors()) {
+    }
+    $this->view->flash("Group created");
+    $group = new GroupModel($form);
+    $group -> update();
+    $this->view->redirectRelative("admin");
+  }
 }
