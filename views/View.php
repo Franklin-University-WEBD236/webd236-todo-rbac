@@ -5,11 +5,12 @@ class View {
     
   }
   
-  public function flash($message) {
+  public function flash($message, $style="alert-success") {
     if (!isset($_SESSION['flash'])) {
       $_SESSION['flash'] = "";
     }
     $_SESSION['flash'] .= $message . '<br />';
+    $_SESSION['flash_style'] = $style;
   }
 
   public function redirect($url) {

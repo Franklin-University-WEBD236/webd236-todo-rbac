@@ -178,6 +178,8 @@ class AdminController extends Controller {
     $form = safeParam($_POST, 'form');
     $this -> validator -> required('name', safeParam($form, 'name'));
     if ($this->validator->hasErrors()) {
+      $this->view->flash("Invalid group name", "alert-danger");
+      $this->view->redirectRelative("admin");
     }
     $this->view->flash("Group created");
     $group = new GroupModel($form);
