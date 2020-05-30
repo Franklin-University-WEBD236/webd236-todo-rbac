@@ -28,6 +28,7 @@ class Model implements ArrayAccess {
       try {
         $fileName = CONFIG['databaseFile'] . ".db3";
         self::$db = new PDO('sqlite:' . $fileName);
+        self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         if (!self::$db) {
           errorPage(500, print_r($db->errorInfo(), 1) );
         }
