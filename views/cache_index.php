@@ -83,7 +83,7 @@
 <?php  endif;?>
       
 <?php  if (isset($_SESSION['flash'])): ?>
-<div class="alert alert-success alert-dismissible flash-message" role="alert" id="flash">
+<div class="alert alert-dismissible flash-message <?php echo(htmlspecialchars($_SESSION['flash_style'])); ?>" role="alert" id="flash">
   <?php echo($_SESSION['flash']); ?>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -96,6 +96,7 @@
 </script>
 <?php  
    unset($_SESSION['flash']);
+   unset($_SESSION['flash_style']);
    endif;
 ?>
 
