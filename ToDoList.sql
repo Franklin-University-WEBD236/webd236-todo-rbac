@@ -66,6 +66,7 @@ CREATE TABLE `groups` (
 
 INSERT INTO "groups" VALUES(1, "Users");
 INSERT INTO "groups" VALUES(2, "Administrators");
+INSERT INTO "groups" VALUES(3, "Helpdesk");
 
 CREATE TABLE `permissions` (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -128,9 +129,16 @@ INSERT INTO "grouppermissions" VALUES(10, 2);
 INSERT INTO "grouppermissions" VALUES(11, 2);
 INSERT INTO "grouppermissions" VALUES(12, 2);
 
+-- helpdesk permissions
+INSERT INTO "grouppermissions" VALUES(5, 3);
+INSERT INTO "grouppermissions" VALUES(6, 3);
+INSERT INTO "grouppermissions" VALUES(7, 3);
+INSERT INTO "grouppermissions" VALUES(8, 3);
+
+
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('todo',24);
 INSERT INTO "sqlite_sequence" VALUES('user',5);
-INSERT INTO "sqlite_sequence" VALUES('groups',2);
+INSERT INTO "sqlite_sequence" VALUES('groups',3);
 INSERT INTO "sqlite_sequence" VALUES('permissions',12);
 COMMIT;
