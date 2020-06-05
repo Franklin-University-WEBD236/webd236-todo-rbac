@@ -18,7 +18,7 @@
           <td class="align-middle">{{$user -> getFullName()}}</td>
           <td>
             <div class="btn-toolbar align-middle float-right">
-              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@admin/remove_member/{{$group['id']}}/{{$user['id']}}@@')"><span class="material-icons">delete</span></button>
+              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@admin/remove_member/{{$group['id']}}/{{$user['id']}}@@')"><span class="material-icons">remove_circle</span></button>
             </div>
           </td>
         </tr>

@@ -36,7 +36,7 @@
           <td class="align-middle">{{$permission -> name}}</td>
           <td>
             <div class="btn-toolbar align-middle float-right">
-              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@admin/remove_permission/{{$form['id']}}/{{$permission['id']}}@@')"><span class="material-icons">delete</span></button>
+              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('@@admin/remove_permission/{{$form['id']}}/{{$permission['id']}}@@')"><span class="material-icons">remove_circle</span></button>
             </div>
           </td>
         </tr>

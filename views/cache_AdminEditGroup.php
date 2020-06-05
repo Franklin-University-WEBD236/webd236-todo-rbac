@@ -137,7 +137,7 @@
           <td class="align-middle"><?php echo(htmlspecialchars($permission -> name)); ?></td>
           <td>
             <div class="btn-toolbar align-middle float-right">
-              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('/admin/remove_permission/<?php echo(htmlspecialchars($form['id'])); ?>/<?php echo(htmlspecialchars($permission['id'])); ?>')"><span class="material-icons">delete</span></button>
+              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('/admin/remove_permission/<?php echo(htmlspecialchars($form['id'])); ?>/<?php echo(htmlspecialchars($permission['id'])); ?>')"><span class="material-icons">remove_circle</span></button>
             </div>
           </td>
         </tr>
