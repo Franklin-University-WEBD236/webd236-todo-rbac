@@ -72,16 +72,21 @@ CREATE TABLE `permissions` (
   name TEXT NOT NULL
 );
 
+-- application useage permissions
 INSERT INTO "permissions" VALUES(1, "create_todo");
 INSERT INTO "permissions" VALUES(2, "edit_todo");
 INSERT INTO "permissions" VALUES(3, "delete_todo");
 INSERT INTO "permissions" VALUES(4, "view_todo");
+
+-- administrative permissions
 INSERT INTO "permissions" VALUES(5, "admin_page");
 INSERT INTO "permissions" VALUES(6, "edit_user");
 INSERT INTO "permissions" VALUES(7, "delete_user");
 INSERT INTO "permissions" VALUES(8, "view_user");
 INSERT INTO "permissions" VALUES(9, "delete_group");
 INSERT INTO "permissions" VALUES(10, "add_group");
+INSERT INTO "permissions" VALUES(11, "edit_group");
+INSERT INTO "permissions" VALUES(12, "edit_membership");
 
 CREATE TABLE `usergroups` (
   userId INTEGER NOT NULL,
@@ -120,10 +125,12 @@ INSERT INTO "grouppermissions" VALUES(7, 2);
 INSERT INTO "grouppermissions" VALUES(8, 2);
 INSERT INTO "grouppermissions" VALUES(9, 2);
 INSERT INTO "grouppermissions" VALUES(10, 2);
+INSERT INTO "grouppermissions" VALUES(11, 2);
+INSERT INTO "grouppermissions" VALUES(12, 2);
 
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('todo',24);
 INSERT INTO "sqlite_sequence" VALUES('user',5);
 INSERT INTO "sqlite_sequence" VALUES('groups',2);
-INSERT INTO "sqlite_sequence" VALUES('permissions',10);
+INSERT INTO "sqlite_sequence" VALUES('permissions',12);
 COMMIT;

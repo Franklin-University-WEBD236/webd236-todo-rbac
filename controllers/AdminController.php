@@ -8,7 +8,6 @@ class AdminController extends Controller {
   }
 
   public function get_index() {
-    $this -> auth -> ensure('admin_page');
     $users = UserModel::findAll();
     $groups = GroupModel::findAll();
     $this->view->renderTemplate(
@@ -112,6 +111,7 @@ class AdminController extends Controller {
   }
 
   public function get_edit_group($id) {
+    $this -> auth -> ensure('edit_group');
     $group = GroupModel::findById($id);
     $permissions = $group -> getPermissions();
     $available_permissions = $group -> getNonPermissions();
@@ -127,6 +127,7 @@ class AdminController extends Controller {
   }
 
   public function post_edit_group($id) {
+    $this -> auth -> ensure('edit_group');
     $form = safeParam($_POST, 'form');
     $group = GroupModel::findById($id);
     $this -> validator -> required('name', safeParam($form, 'name'));
@@ -151,6 +152,7 @@ class AdminController extends Controller {
   }
 
   public function post_add_permission($group_id, $perm_id) {
+    $this -> auth -> ensure('edit_group');
     $permission = PermissionModel::findById($perm_id);
     $group = GroupModel::findById($group_id);
     $group -> addPermission($permission);
@@ -159,6 +161,7 @@ class AdminController extends Controller {
   }
 
   public function post_remove_permission($group_id, $perm_id) {
+    $this -> auth -> ensure('edit_group');
     $permission = PermissionModel::findById($perm_id);
     $group = GroupModel::findById($group_id);
     $group -> removePermission($permission);
@@ -189,6 +192,7 @@ class AdminController extends Controller {
   }
 
   public function get_edit_group_members($id) {
+    $this -> auth -> ensure('edit_membership');
     $group = GroupModel::findById($id);
     $members = $group -> getMembers();
     $non_members = $group -> getNonMembers();
@@ -205,6 +209,7 @@ class AdminController extends Controller {
   }
 
   public function post_add_member($group_id, $user_id) {
+    $this -> auth -> ensure('edit_membership');
     $group = GroupModel::findById($group_id);
     $user = UserModel::findById($user_id);
     $group -> addUser($user);
@@ -225,6 +230,7 @@ class AdminController extends Controller {
   }
 
   public function get_edit_user_groups($id) {
+    $this -> auth -> ensure('edit_membership');
     $user = UserModel::findById($id);
     $member_of = GroupModel::findByUserId($id);
     $not_member_of = GroupModel::findByNotUserId($id);
