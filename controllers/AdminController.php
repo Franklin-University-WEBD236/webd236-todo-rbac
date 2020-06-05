@@ -191,6 +191,7 @@ class AdminController extends Controller {
     $group = GroupModel::findById($id);
     $members = $group -> getMembers();
     $non_members = $group -> getNonMembers();
+    $_SESSION['return_to'] = "admin/edit_group_members/$id";
     $this->view->renderTemplate(
       "views/AdminEditGroupMembers.php",
       array(
@@ -207,7 +208,9 @@ class AdminController extends Controller {
     $user = UserModel::findById($user_id);
     $group -> addUser($user);
     $this->view->flash("User added");
-    $this->view->redirectRelative("admin/edit_group_members/{$group->id}");
+    $location = $_SESSION['return_to'];
+    unset($_SESSION['return_to']);
+    $this->view->redirectRelative($location);
   }
 
   public function post_remove_member($group_id, $user_id) {
@@ -215,18 +218,23 @@ class AdminController extends Controller {
     $user = UserModel::findById($user_id);
     $group -> removeUser($user);
     $this->view->flash("User removed");
-    $this->view->redirectRelative("admin/edit_group_members/{$group->id}");
+    $location = $_SESSION['return_to'];
+    unset($_SESSION['return_to']);
+    $this->view->redirectRelative($location);
   }
 
-  public function get_edit_user_groups() {
-    // Put your code for get_edit_user_groups here, something like
-    // 1. Load and validate parameters or form contents
-    // 2. Query or update the database
-    // 3. Render a template or redirect
+  public function get_edit_user_groups($id) {
+    $user = UserModel::findById($id);
+    $member_of = GroupModel::findByUserId($id);
+    $not_member_of = GroupModel::findByNotUserId($id);
+    $_SESSION['return_to'] = "admin/edit_user_groups/$id";
     $this->view->renderTemplate(
-      "views/AdminEdit_user_groups.php",
+      "views/AdminEditUserGroups.php",
       array(
-        'title' => 'AdminEdit_user_groups',
+        'title' => "{$user->getFullName()} Memberships",
+        'user' => $user,
+        'member_of' => $member_of,
+        'not_member_of' => $not_member_of,
       )
     );
   }
