@@ -194,9 +194,10 @@ class AdminController extends Controller {
     $this->view->renderTemplate(
       "views/AdminEditGroupMembers.php",
       array(
-        'title' => "Edit Members of {$group->name}",
+        'title' => "Membership of {$group->name}",
         'members' => $members,
         'non_members' => $non_members,
+        'group' => $group,
       )
     );
   }
