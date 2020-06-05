@@ -66,7 +66,7 @@ class Authenticator {
     if (!$this -> can($permissionKey, $userId)) {
       $userId = $this -> realUserId($userId);
       Logger::instance() -> warn("User $userId attempted unauthorized operation $permissionKey");
-      die("You do not have permission to access this resource.  This attempt has been logged.");
+      new ErrorController(401, "You do not have permission to access this resource. This attempt has been logged.");
     }
   }
 

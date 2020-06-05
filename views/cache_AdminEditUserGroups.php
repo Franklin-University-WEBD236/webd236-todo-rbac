@@ -104,7 +104,51 @@
 <div class="row">
   <div class="col-lg-12">
     <h1><?php echo(htmlspecialchars($title)); ?></h1>
-    <p>Replace this with your view contents</p>
+    
+    <h2>Member of</h2>
+    <table class="table table-striped" frame="box">
+      <thead class="thead-dark">
+        <tr>
+          <th>Group name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+<?php  foreach ($member_of as $group) : ?>
+        <tr>
+          <td class="align-middle"><?php echo(htmlspecialchars($group -> name)); ?></td>
+          <td>
+            <div class="btn-toolbar align-middle float-right">
+              <button class="btn btn-danger d-flex justify-content-center align-content-between" onclick="post('/admin/remove_member/<?php echo(htmlspecialchars($group['id'])); ?>/<?php echo(htmlspecialchars($user['id'])); ?>')"><span class="material-icons">remove_circle</span></button>
+            </div>
+          </td>
+        </tr>
+<?php  endforeach; ?>
+      </tbody>
+    </table>
+
+    <h2>Not member of</h2>
+    <table class="table table-striped" frame="box">
+      <thead class="thead-dark">
+        <tr>
+          <th>Group name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+<?php  foreach ($not_member_of as $group) : ?>
+        <tr>
+          <td class="align-middle"><?php echo(htmlspecialchars($group -> name)); ?></td>
+          <td>
+            <div class="btn-toolbar align-middle float-right">
+              <button class="btn btn-success d-flex justify-content-center align-content-between" onclick="post('/admin/add_member/<?php echo(htmlspecialchars($group['id'])); ?>/<?php echo(htmlspecialchars($user['id'])); ?>')"><span class="material-icons">add_circle</span></button>
+            </div>
+          </td>
+        </tr>
+<?php  endforeach; ?>
+      </tbody>
+    </table>
+  
   </div>
 </div>
           

@@ -4,6 +4,7 @@ class AdminController extends Controller {
   public function __construct() {
     parent::__construct();
     // this protects the entire controller
+    $this -> auth -> ensure('admin_page');
   }
 
   public function get_index() {

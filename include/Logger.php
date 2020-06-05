@@ -9,7 +9,7 @@ class Logger {
   const WARN = 2;
   const ERROR = 3;
 
-  private function __construct($filename='application.log') {
+  private function __construct($filename='error.log') {
     // log everything
     $this -> filename = $filename;
   }
