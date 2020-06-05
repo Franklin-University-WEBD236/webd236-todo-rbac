@@ -201,4 +201,20 @@ class AdminController extends Controller {
       )
     );
   }
+
+  public function post_add_member($group_id, $user_id) {
+    $group = GroupModel::findById($group_id);
+    $user = UserModel::findById($user_id);
+    $group -> addUser($user);
+    $this->view->flash("User added");
+    $this->view->redirectRelative("admin/edit_group_members/{$group->id}");
+  }
+
+  public function post_remove_member($group_id, $user_id) {
+    $group = GroupModel::findById($group_id);
+    $user = UserModel::findById($user_id);
+    $group -> removeUser($user);
+    $this->view->flash("User removed");
+    $this->view->redirectRelative("admin/edit_group_members/{$group->id}");
+  }
 }
