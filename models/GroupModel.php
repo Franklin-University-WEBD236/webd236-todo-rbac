@@ -154,19 +154,19 @@ class GroupModel extends Model {
   }
 
   public function getMembers() {
-    $statement = self::$db -> prepare("SELECT users.id AS id, users.firstName AS firstName, users.lastName AS lastName, users.password AS password FROM users, usergroups WHERE users.id = usergroups.userId and usergroups.groupId = :id ORDER BY lastName, firstName");
+    $statement = self::$db -> prepare("SELECT user.id AS id, user.firstName AS firstName, user.lastName AS lastName, user.password AS password FROM user, usergroups WHERE user.id = usergroups.userId and usergroups.groupId = :id ORDER BY lastName, firstName");
     $statement -> bindParam(':id', $this -> id);
     $statement -> execute();
     $rows = $statement -> fetchAll(PDO::FETCH_ASSOC);
-    return User::fromRows($rows);
+    return UserModel::fromRows($rows);
   }
 
   public function getNonMembers() {
-    $statement = self::$db -> prepare("SELECT * FROM users WHERE users.id not in (SELECT users.id FROM users, usergroups WHERE users.id = usergroups.userId and usergroups.groupId = :id) ORDER BY lastName, firstName;");
+    $statement = self::$db -> prepare("SELECT * FROM user WHERE user.id not in (SELECT user.id FROM user, usergroups WHERE user.id = usergroups.userId and usergroups.groupId = :id) ORDER BY lastName, firstName;");
     $statement -> bindParam(':id', $this -> id);
     $statement -> execute();
     $rows = $statement -> fetchAll(PDO::FETCH_ASSOC);
-    return User::fromRows($rows);
+    return UserModel::fromRows($rows);
   }
 
   public function getPermissions() {

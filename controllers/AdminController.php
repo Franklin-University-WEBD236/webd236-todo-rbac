@@ -167,8 +167,8 @@ class AdminController extends Controller {
 
   public function post_delete_group($id) {
     $this -> auth -> ensure('delete_group');
-    $user = GroupModel::findById($id);
-    $user->delete();
+    $group = GroupModel::findById($id);
+    $group->delete();
     $this->view->flash("Group deleted");
     $this->view->redirectRelative("admin");
   }
@@ -187,15 +187,16 @@ class AdminController extends Controller {
     $this->view->redirectRelative("admin");
   }
 
-  public function get_edit_group_members() {
-    // Put your code for get_edit_group_members here, something like
-    // 1. Load and validate parameters or form contents
-    // 2. Query or update the database
-    // 3. Render a template or redirect
+  public function get_edit_group_members($id) {
+    $group = GroupModel::findById($id);
+    $members = $group -> getMembers();
+    $non_members = $group -> getNonMembers();
     $this->view->renderTemplate(
-      "views/AdminEdit_group_members.php",
+      "views/AdminEditGroupMembers.php",
       array(
-        'title' => 'AdminEdit_group_members',
+        'title' => "Edit Members of {$group->name}",
+        'members' => $members,
+        'non_members' => $non_members,
       )
     );
   }

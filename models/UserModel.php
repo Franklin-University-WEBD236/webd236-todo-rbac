@@ -15,7 +15,7 @@ class UserModel extends Model {
     }
   }
   
-  private static function fromRow($row) {
+  public static function fromRow($row) {
     $user = null;
     if ($row) {
       $user = new UserModel($row);
@@ -23,7 +23,7 @@ class UserModel extends Model {
     return $user;
   }
 
-  private static function fromRows($rows) {
+  public static function fromRows($rows) {
     $result = array();
     foreach ($rows as $row) {
       $result[] = self::fromRow($row);
